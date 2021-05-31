@@ -10,6 +10,6 @@ proc fuzzMe(data: openarray[byte]): bool =
     data[2].char == 'Z' and
     data[3].char == 'Z' # :‑<
 
-proc fuzzer(data: openarray[byte]): cint {.exportc: "LLVMFuzzerTestOneInput".} =
+proc testOneInput(data: openarray[byte]): cint {.exportc: "LLVMFuzzerTestOneInput".} =
   result = 0
   discard fuzzMe(data)
