@@ -1,14 +1,4 @@
-import snappy, std/strutils
-
-type
-  SeqPayload = object
-    cap: int
-  SeqHeader = object
-    len: int
-    p: ptr SeqPayload
-
-proc capacity[T](x: seq[T]): int =
-  cast[SeqHeader](x).p[].cap
+import snappy, std/[strutils, random]
 
 proc testOneInput(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
@@ -22,14 +12,15 @@ proc mutate(data: var openarray[byte], maxLen: int): int {.
 proc customMutator(data: var openarray[byte], maxLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomMutator".} =
   # Decompress the input data. If that fails, use a dummy value.
+  var rng = initRand(seed)
   var uncompressed = uncompress(data)
   if uncompressed.len == 0: uncompressed = cast[seq[byte]](@"hi")
-  # Mutate the uncompressed data with `libFuzzer`'s default mutator. Make
-  # the `decompressed` seq's extra capacity available for inserting
-  # mutations via `grow`.
-  let cap = uncompressed.capacity
-  uncompressed.grow(cap, 0)
-  let newDecompressedLen = mutate(uncompressed, cap)
+  # Mutate the uncompressed data with `libFuzzer`'s default mutator. Expand
+  # the `decompressed` seq's for inserting mutations via `grow`.
+  let len = uncompressed.len
+  if rng.rand(1.0) <= 1 / 4:
+    uncompressed.grow(uncompressed.len*2, 0)
+  let newDecompressedLen = mutate(toOpenArray(uncompressed, 0, len-1), uncompressed.len)
   # Recompress the mutated data.
   let compressed = compress(uncompressed.toOpenArray(0, newDecompressedLen-1))
   # Copy the recompressed mutated data into `data` and return the new length.
