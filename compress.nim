@@ -1,4 +1,4 @@
-import snappy, std/[strutils, random]
+import snappy, std/strutils
 
 proc testOneInput(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
@@ -12,15 +12,13 @@ proc mutate(data: var openarray[byte], maxLen: int): int {.
 proc customMutator(data: var openarray[byte], maxLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomMutator".} =
   # Decompress the input data. If that fails, use a dummy value.
-  var rng = initRand(seed)
   var uncompressed = uncompress(data)
   if uncompressed.len == 0: uncompressed = cast[seq[byte]](@"hi")
   # Mutate the uncompressed data with `libFuzzer`'s default mutator. Expand
   # the `decompressed` seq's for inserting mutations via `grow`.
-  let len = uncompressed.len
-  if rng.rand(1.0) <= 1 / 4:
-    uncompressed.grow(uncompressed.len*2, 0)
-  let newDecompressedLen = mutate(toOpenArray(uncompressed, 0, len-1), uncompressed.len)
+  let oldLen = uncompressed.len
+  uncompressed.grow(oldLen*2, 0)
+  let newDecompressedLen = mutate(uncompressed.toOpenArray(0, oldLen-1), uncompressed.len)
   # Recompress the mutated data.
   let compressed = compress(uncompressed.toOpenArray(0, newDecompressedLen-1))
   # Copy the recompressed mutated data into `data` and return the new length.
