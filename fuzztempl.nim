@@ -15,10 +15,10 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implem
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.
 
-proc customMutator(data: var openarray[byte], maxLen: int, seed: int64): int {.
+proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomMutator".} = discard "to implement"
   ## Optional user-provided custom mutator.
-  ## Mutates raw data in `data` inplace.
+  ## Mutates raw data in `data..<data+len` inplace.
   ## Returns the new length, which is not greater than `maxLen`.
   ## Given the same `seed` produces the same mutation.
 
@@ -30,9 +30,9 @@ proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
   ## Returns the new length, which is not greater than `res.len`.
   ## Should produce the same mutation given the same `seed`.
 
-proc mutate(data: var openarray[byte], maxLen: int): int {.
+proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
     importc: "LLVMFuzzerMutate".}
   ## Experimental, may go away in future.
   ## libFuzzer-provided procedure to be used inside `customMutator`.
-  ## Mutates raw data in `data` inplace.
+  ## Mutates raw data in `data..<data+len` inplace.
   ## Returns the new length, which is not greater than `maxLen`.
