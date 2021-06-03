@@ -1,15 +1,8 @@
-# Standalone main procedure for fuzz targets.
-#
-# Include this file to provide reproducers for bugs when linking against libFuzzer
-# or other fuzzing engine is undesirable.
+## Standalone main procedure for fuzz targets.
+##
+## Include this file to provide reproducers for bugs when linking against libFuzzer
+## or other fuzzing engine is undesirable.
 import std/[os, strformat, strutils]
-
-const inStandaloneTarget = true
-
-# Forward declarations
-proc testOneInput(data: openarray[byte]): cint {.
-    exportc: "LLVMFuzzerTestOneInput".}
-proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".}
 
 proc main =
   stderr.write &"StandaloneFuzzTarget: running {paramCount()} inputs\n"
@@ -19,3 +12,5 @@ proc main =
     let buf = readFile(paramStr(i))
     discard testOneInput(toOpenArrayByte(buf, 0, buf.high))
     stderr.write &"Done:    {paramStr(i)}: ({formatSize(buf.len)})\n"
+
+main()
