@@ -1,4 +1,4 @@
-# --panics:on --gc:arc -d:useMalloc -t:"-O3 -fsanitize=address,undefined"
+# --panics:on --gc:arc -d:useMalloc -t:"-fsanitize=address,undefined"
 # -l:"-fsanitize=address,undefined" -d:nosignalhandler -d:danger -g
 
 import os, strutils, algorithm

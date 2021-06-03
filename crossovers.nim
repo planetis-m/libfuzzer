@@ -24,9 +24,9 @@ proc testOneInput(data: openarray[byte]): cint {.
 proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
     res: var openarray[byte], seed: int64): int {.
     exportc: "LLVMFuzzerCustomCrossOver".} =
-  var separatorLen = len(Separator)
+  const separatorLen = len(Separator)
   if printed < 32:
-    stderr.write &"In LLVMFuzzerCustomCrossover {data1.len} {data2.len}\n"
+    stderr.write &"In customCrossover {data1.len} {data2.len}\n"
   inc(printed)
   result = data1.len + data2.len + separatorLen
   if result > res.len:

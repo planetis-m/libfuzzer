@@ -3,6 +3,9 @@
 ## you should not include this file into your target. In 95% of cases
 ## all you need is to define the procedure `testOneInput` in your file.
 
+const inStadaloneTarget = false
+#include/standalone
+
 proc testOneInput(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} = discard "to implement"
   ## Mandatory user-provided target procedure.
@@ -30,9 +33,13 @@ proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
   ## Returns the new length, which is not greater than `res.len`.
   ## Should produce the same mutation given the same `seed`.
 
-proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
-    importc: "LLVMFuzzerMutate".}
-  ## Experimental, may go away in future.
-  ## libFuzzer-provided procedure to be used inside `customMutator`.
-  ## Mutates raw data in `data..<data+len` inplace.
-  ## Returns the new length, which is not greater than `maxLen`.
+when inStandaloneTarget:
+  proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int =
+    assert(false, "mutate should not be called from StandaloneFuzzTarget")
+else:
+  proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
+      importc: "LLVMFuzzerMutate".}
+    ## Experimental, may go away in future.
+    ## libFuzzer-provided procedure to be used inside `customMutator`.
+    ## Mutates raw data in `data..<data+len` inplace.
+    ## Returns the new length, which is not greater than `maxLen`.

@@ -1,6 +1,6 @@
 # https://llvm.org/docs/LibFuzzer.html
 
-# --panics:on --gc:arc -d:useMalloc --cc:clang -t:"-O3 -fsanitize=fuzzer,address,undefined"
+# --panics:on --gc:arc -d:useMalloc --cc:clang -t:"-fsanitize=fuzzer,address,undefined"
 # -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -d:danger -g
 
 proc fuzzMe(data: openarray[byte]): bool =

@@ -1,6 +1,6 @@
 # https://github.com/google/sanitizers/wiki/ThreadSanitizerPopularDataRaces
 # pbl benign
-# --threads:on --panics:on --gc:arc -d:useMalloc -t:"-O3 -fsanitize=thread"
+# --threads:on --panics:on --gc:arc -d:useMalloc -t:"-fsanitize=thread"
 # -l:"-fsanitize=thread" -d:nosignalhandler -d:danger -g
 # TSAN_OPTIONS="force_seq_cst_atomics=1"
 import std/[atomics, os]
