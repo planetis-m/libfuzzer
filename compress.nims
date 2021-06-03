@@ -1,6 +1,7 @@
 --cc: clang
 when not defined(standalone):
-  --nomain: on
---define: nosignalhandler
+  --noMain: on
+--define: noSignalHandler
+--define: useMalloc
 --passC: "-fsanitize=address,undefined"
 --passL: "-fsanitize=address,undefined"
