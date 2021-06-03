@@ -8,7 +8,7 @@ proc testOneInput(data: openarray[byte]): cint {.
 
 proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard
 
-when defined(standalone):
+when defined(fuzzSa):
   include/standalone
 else:
   proc mutate(data: ptr UncheckedArray[byte]; len, maxLen: int): int {.

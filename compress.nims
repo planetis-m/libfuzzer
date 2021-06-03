@@ -1,7 +1,10 @@
 --cc: clang
-when not defined(standalone):
+when not defined(fuzzSa):
   --noMain: on
---define: noSignalHandler
---define: useMalloc
+  --passC: "-fsanitize=fuzzer"
+  --passL: "-fsanitize=fuzzer"
 --passC: "-fsanitize=address,undefined"
 --passL: "-fsanitize=address,undefined"
+--define: noSignalHandler
+--define: useMalloc
+#--debugger:native # ignored

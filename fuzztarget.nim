@@ -1,6 +1,4 @@
-# From llvm/projects/compiler-rt/lib/fuzzer/FuzzerInterface.h
 ## NOTE: the libFuzzer interface is thin and in the majority of cases
-## you should not include this file into your target. In 95% of cases
 ## all you need is to define the procedure `testOneInput` in your file.
 
 proc testOneInput(data: openarray[byte]): cint {.
@@ -15,7 +13,7 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implem
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.
 
-when defined(standalone):
+when defined(fuzzSa):
   include/standalone
 else:
   proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
