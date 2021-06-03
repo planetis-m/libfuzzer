@@ -4,7 +4,7 @@
 # or other fuzzing engine is undesirable.
 import std/[os, strformat, strutils]
 
-const inStadaloneTarget = true
+const inStandaloneTarget = true
 
 # Forward declarations
 proc testOneInput(data: openarray[byte]): cint {.

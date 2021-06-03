@@ -3,7 +3,7 @@
 ## you should not include this file into your target. In 95% of cases
 ## all you need is to define the procedure `testOneInput` in your file.
 
-const inStadaloneTarget = false
+const inStandaloneTarget = false
 #include/standalone
 
 proc testOneInput(data: openarray[byte]): cint {.
@@ -35,7 +35,7 @@ proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
 
 when inStandaloneTarget:
   proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int =
-    assert(false, "mutate should not be called from StandaloneFuzzTarget")
+    {.error: "mutate should not be called from StandaloneFuzzTarget".}
 else:
   proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}
