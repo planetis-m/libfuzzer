@@ -189,7 +189,7 @@ class="link-seesrc" target="_blank">Source</a>
     <span class="Identifier">importc</span><span class="Other">:</span> <span class="StringLit">&quot;LLVMFuzzerMutate&quot;</span>.}</pre></dt>
 <dd>
 
-Experimental, may go away in future. libFuzzer-provided procedure to be used inside <tt class="docutils literal"><span class="pre"><span class="Identifier">customMutator</span></span></tt>. Mutates raw data in <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span><span class="Operator">..&lt;</span><span class="Identifier">data</span><span class="Operator">+</span><span class="Identifier">len</span></span></tt> inplace. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxLen</span></span></tt>.
+Experimental, may go away in future. libFuzzer-provided procedure to be used inside <tt class="docutils literal"><span class="pre"><span class="Identifier">customMutator</span></span></tt>. Mutates raw data in <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span><span class="Punctuation">[</span><span class="FloatNumber">0.</span><span class="Operator">.&lt;</span><span class="Identifier">len</span><span class="Punctuation">]</span></span></tt> inplace. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxLen</span></span></tt>.
 &nbsp;&nbsp;<a
 href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L19"
 class="link-seesrc" target="_blank">Source</a>
@@ -201,7 +201,7 @@ class="link-seesrc" target="_blank">Source</a>
     <span class="Identifier">exportc</span><span class="Other">:</span> <span class="StringLit">&quot;LLVMFuzzerCustomMutator&quot;</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
-Optional user-provided custom mutator. Mutates raw data in <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span><span class="Operator">..&lt;</span><span class="Identifier">data</span><span class="Operator">+</span><span class="Identifier">len</span></span></tt> inplace. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxLen</span></span></tt>. Given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt> produces the same mutation.
+Optional user-provided custom mutator. Mutates raw data in <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span><span class="Punctuation">[</span><span class="FloatNumber">0.</span><span class="Operator">.&lt;</span><span class="Identifier">len</span><span class="Punctuation">]</span></span></tt> inplace. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxLen</span></span></tt>. Given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt> produces the same mutation.
 &nbsp;&nbsp;<a
 href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L26"
 class="link-seesrc" target="_blank">Source</a>
@@ -231,7 +231,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 17:08:57 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 18:34:01 UTC</small>
       </div>
     </div>
   </div>

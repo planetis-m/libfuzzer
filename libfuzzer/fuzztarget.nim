@@ -20,13 +20,13 @@ when not defined(fuzzSa) or defined(nimdoc):
       importc: "LLVMFuzzerMutate".}
     ## Experimental, may go away in future.
     ## libFuzzer-provided procedure to be used inside `customMutator`.
-    ## Mutates raw data in `data..<data+len` inplace.
+    ## Mutates raw data in `data[0..<len]` inplace.
     ## Returns the new length, which is not greater than `maxLen`.
 
   proc customMutator*(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
       exportc: "LLVMFuzzerCustomMutator".} = discard "to implement"
     ## Optional user-provided custom mutator.
-    ## Mutates raw data in `data..<data+len` inplace.
+    ## Mutates raw data in `data[0..<len]` inplace.
     ## Returns the new length, which is not greater than `maxLen`.
     ## Given the same `seed` produces the same mutation.
 

@@ -10,7 +10,7 @@ task "docs", "Generate documentation":
     url = "https://github.com/planetis-m/libfuzzer"
   if doc.needsRefresh(src):
     echo "Generating the docs..."
-    direShell(nimExe, "doc --verbosity:0",
-        &"--git.url:{url} --git.devel:master --git.commit:master --out:{dir} {src}")
+    direShell(nimExe,
+        &"doc --verbosity:0 --git.url:{url} --git.devel:master --git.commit:master --out:{dir} {src}")
   else:
-    echo "Generating the docs skipped."
+    echo "Skipped generating the docs."
