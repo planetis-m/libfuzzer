@@ -38,7 +38,7 @@ Structure-Aware Fuzzing
   can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine
   for a specific input type.
 
-*Source* [2]_
+*—source* [5]_
 
 Take a look at the snappy compression `example <examples/compress/>`_.
 

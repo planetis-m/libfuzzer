@@ -17,7 +17,7 @@
 <link href='https://fonts.googleapis.com/css?family=Source+Code+Pro:400,500,600' rel='stylesheet' type='text/css'/>
 
 <!-- CSS -->
-<title>fuzztarget</title>
+<title>libfuzzer/fuzztarget</title>
 <link rel="stylesheet" type="text/css" href="nimdoc.out.css">
 
 <script type="text/javascript" src="dochack.js"></script>
@@ -64,7 +64,7 @@ window.addEventListener('DOMContentLoaded', main);
 <body>
 <div class="document" id="documentId">
   <div class="container">
-    <h1 class="title">fuzztarget</h1>
+    <h1 class="title">libfuzzer/fuzztarget</h1>
     <div class="row">
   <div class="three columns">
   <div class="theme-switch-wrapper">
@@ -106,11 +106,6 @@ window.addEventListener('DOMContentLoaded', main);
     title="customMutator(data: ptr UncheckedArray[byte]; len, maxLen: int; seed: int64): int">customMutator(data: ptr UncheckedArray[byte]; len, maxLen: int; seed: int64): int</a></li>
 
   </ul>
-  <ul class="simple nested-toc-section">main
-      <li><a class="reference" href="#main"
-    title="main()">main()</a></li>
-
-  </ul>
   <ul class="simple nested-toc-section">customCrossOver
       <li><a class="reference" href="#customCrossOver%2CopenArray%5Bbyte%5D%2CopenArray%5Bbyte%5D%2CopenArray%5Bbyte%5D%2Cint64"
     title="customCrossOver(data1: openArray[byte]; data2: openArray[byte];
@@ -121,6 +116,11 @@ window.addEventListener('DOMContentLoaded', main);
   <ul class="simple nested-toc-section">initialize
       <li><a class="reference" href="#initialize"
     title="initialize(): cint">initialize(): cint</a></li>
+
+  </ul>
+  <ul class="simple nested-toc-section">standaloneFuzzTarget
+      <li><a class="reference" href="#standaloneFuzzTarget"
+    title="standaloneFuzzTarget()">standaloneFuzzTarget()</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">mutate
@@ -136,9 +136,9 @@ window.addEventListener('DOMContentLoaded', main);
 
   </div>
   &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/fuzztarget.nim#L1"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L1"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
 
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
@@ -154,9 +154,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Mandatory user-provided target procedure. Executes the code under test with <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span></span></tt> as the input. libFuzzer will invoke this procedure <em>many</em> times with different inputs. Must return 0.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/fuzztarget.nim#L4"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L4"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L4" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L4" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="initialize"></a>
@@ -165,22 +165,23 @@ class="link-seesrc" target="_blank">Source</a>
 
 Optional user-provided initialization procedure. If provided, this procedure will be called by libFuzzer once at startup. Must return 0.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/fuzztarget.nim#L11"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L11"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L11" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L11" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="main"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#main"><span class="Identifier">main</span></a><span class="Other">(</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
+<a id="standaloneFuzzTarget"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#standaloneFuzzTarget"><span class="Identifier">standaloneFuzzTarget</span></a><span class="Other">(</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
+                              <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
 <p>Standalone main procedure for fuzz targets.</p>
-<p>Use <tt class="docutils literal"><span class="pre"><span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">fuzzSa</span></span></tt> to include this file to provide reproducers for bugs when linking against libFuzzer or other fuzzing engines is undesirable.</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">fuzzSa</span></span></tt> to call <tt class="docutils literal"><span class="pre"><span class="Identifier">standaloneFuzzTarget</span></span></tt> to provide reproducers for bugs when linking against libFuzzer is undesirable.</p>
 
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/standalone.nim#L3"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/standalone.nim#L3"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/standalone.nim#L3" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/standalone.nim#L3" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="mutate,ptr.UncheckedArray[byte],int,int"></a>
@@ -190,9 +191,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Experimental, may go away in future. libFuzzer-provided procedure to be used inside <tt class="docutils literal"><span class="pre"><span class="Identifier">customMutator</span></span></tt>. Mutates raw data in <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span><span class="Operator">..&lt;</span><span class="Identifier">data</span><span class="Operator">+</span><span class="Identifier">len</span></span></tt> inplace. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxLen</span></span></tt>.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/fuzztarget.nim#L19"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L19"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L19" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L19" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="customMutator,ptr.UncheckedArray[byte],int,int,int64"></a>
@@ -202,9 +203,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Optional user-provided custom mutator. Mutates raw data in <tt class="docutils literal"><span class="pre"><span class="Identifier">data</span><span class="Operator">..&lt;</span><span class="Identifier">data</span><span class="Operator">+</span><span class="Identifier">len</span></span></tt> inplace. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxLen</span></span></tt>. Given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt> produces the same mutation.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/fuzztarget.nim#L26"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L26"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L26" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L26" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="customCrossOver,openArray[byte],openArray[byte],openArray[byte],int64"></a>
@@ -215,9 +216,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Optional user-provided custom cross-over procedure. Combines pieces of <tt class="docutils literal"><span class="pre"><span class="Identifier">data1</span></span></tt> &amp; <tt class="docutils literal"><span class="pre"><span class="Identifier">data2</span></span></tt> together into <tt class="docutils literal"><span class="pre"><span class="Identifier">res</span></span></tt>. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">res</span><span class="Operator">.</span><span class="Identifier">len</span></span></tt>. Should produce the same mutation given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt>.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/fuzztarget.nim#L33"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L33"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L33" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L33" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -230,7 +231,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 11:54:56 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 13:38:57 UTC</small>
       </div>
     </div>
   </div>

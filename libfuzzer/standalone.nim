@@ -1,10 +1,10 @@
 import std/[os, strformat, strutils]
 
-proc main* =
+proc standaloneFuzzTarget* =
   ## Standalone main procedure for fuzz targets.
   ##
-  ## Use `-d:fuzzSa` to include this file to provide reproducers for bugs
-  ## when linking against libFuzzer is undesirable.
+  ## Use `-d:fuzzSa` to call `standaloneFuzzTarget` to provide reproducers
+  ## for bugs when linking against libFuzzer is undesirable.
   stderr.write &"StandaloneFuzzTarget: running {paramCount()} inputs\n"
   discard initialize()
   for i in 1..paramCount():
@@ -13,4 +13,4 @@ proc main* =
     discard testOneInput(toOpenArrayByte(buf, 0, buf.high))
     stderr.write &"Done:    {paramStr(i)}: ({formatSize(buf.len)})\n"
 
-main()
+standaloneFuzzTarget()
