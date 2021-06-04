@@ -1,0 +1,16 @@
+# Ignore all root files
+/*
+# Exclude source code files in subdirectories
+!/*.nim
+!/*.nims
+!/*.rst
+# Exclude root directories
+!/*/
+# Include all files in subdirectories
+/*/*
+# Exclude source code files in subdirectories
+!/*/*.nim
+!/*/*.nims
+# Exclude doc files in subdirectory
+!/docs/*.html
+!/docs/*.css
