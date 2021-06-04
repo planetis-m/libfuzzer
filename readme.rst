@@ -9,7 +9,8 @@ Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzi
 Example
 =======
 
-In 95% of cases all you need is to define the procedure `testOneInput` in your file.
+In 95% of cases all you need is to define the procedure ``testOneInput`` in your file.
+
 
 .. code-block:: nim
 
@@ -25,12 +26,12 @@ In 95% of cases all you need is to define the procedure `testOneInput` in your f
     discard fuzzMe(data)
 
 
-Compile with `--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g`
+Compile with ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g``.
 
 Structure-Aware Fuzzing
 -----------------------
 
-From :ref:`Structure-Aware Fuzzing with libFuzzer <resources>`
+From `Structure-Aware Fuzzing with libFuzzer`
 
 > But the lack of an input grammar can also result in inefficient fuzzing for complicated input types, where any traditional mutation (e.g. bit flipping) leads to an invalid input rejected by the target API in the early stage of parsing. With some additional effort, however, libFuzzer can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine for a specific input type.
 
@@ -39,7 +40,9 @@ See the example in the `compress <examples/compress/>`_ directory.
 Installation
 ============
 
-.. _resources:
+- Copy the files `fuzztarget.{nim,nims}` at your testing directory.
+- Fill in the implementations of the exported procedures.
+- Compile the file and run with an empty corpus directory as an argument.
 
 Presentations
 =============
