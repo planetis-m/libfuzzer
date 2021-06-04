@@ -30,13 +30,13 @@ Installation
 Presentations
 =============
 
-#. Jonathan Metzman [Fuzzing 101](https://www.youtube.com/watch?v=NI2w6eT8p-E)
-#. Justin Bogner [Adventures in Fuzzing Instruction Selection](https://www.youtube.com/watch?v=UBbQ_s6hNgg)
-#. Mateusz Jurczyk [Effective File Format Fuzzing](https://www.youtube.com/watch?v=qTTwqFRD1H8)
+#. Jonathan Metzman `Fuzzing 101 <https://www.youtube.com/watch?v=NI2w6eT8p-E>`_
+#. Justin Bogner [Adventures in Fuzzing Instruction Selection <https://www.youtube.com/watch?v=UBbQ_s6hNgg>`_
+#. Mateusz Jurczyk [Effective File Format Fuzzing <https://www.youtube.com/watch?v=qTTwqFRD1H8>`_
 
 Further Readings
 ================
 
-#. [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
-#. [Structure-Aware Fuzzing with libFuzzer](https://github.com/google/fuzzing/blob/master/docs/structure-aware-fuzzing.md)
-#. [Efficient Fuzzing Guide](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/testing/libfuzzer/efficient_fuzzing.md#efficient-fuzzing-guide)
+#. [libFuzzer Tutorial <https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md>`_
+#. [Structure-Aware Fuzzing with libFuzzer <https://github.com/google/fuzzing/blob/master/docs/structure-aware-fuzzing.md>`_
+#. [Efficient Fuzzing Guide <https://chromium.googlesource.com/chromium/src/+/refs/heads/main/testing/libfuzzer/efficient_fuzzing.md#efficient-fuzzing-guide>`_
