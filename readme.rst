@@ -31,7 +31,7 @@ Compile with ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitiz
 Structure-Aware Fuzzing
 -----------------------
 
-From ``Structure-Aware Fuzzing with libFuzzer`:
+From [2]_:
 
   But the lack of an input grammar can also result in inefficient fuzzing
   for complicated input types, where any traditional mutation (e.g. bit
@@ -53,13 +53,13 @@ Installation
 Presentations
 =============
 
-#. Jonathan Metzman `Fuzzing 101 <https://www.youtube.com/watch?v=NI2w6eT8p-E>`_
-#. Justin Bogner `Adventures in Fuzzing Instruction Selection <https://www.youtube.com/watch?v=UBbQ_s6hNgg>`_
-#. Mateusz Jurczyk `Effective File Format Fuzzing <https://www.youtube.com/watch?v=qTTwqFRD1H8>`_
+.. [#] Jonathan Metzman `Fuzzing 101 <https://www.youtube.com/watch?v=NI2w6eT8p-E>`_
+.. [#] Justin Bogner `Adventures in Fuzzing Instruction Selection <https://www.youtube.com/watch?v=UBbQ_s6hNgg>`_
+.. [#] Mateusz Jurczyk `Effective File Format Fuzzing <https://www.youtube.com/watch?v=qTTwqFRD1H8>`_
 
 Further Readings
 ================
 
-#. `libFuzzer Tutorial <https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md>`_
-#. `Structure-Aware Fuzzing with libFuzzer <https://github.com/google/fuzzing/blob/master/docs/structure-aware-fuzzing.md>`_
-#. `Efficient Fuzzing Guide <https://chromium.googlesource.com/chromium/src/+/refs/heads/main/testing/libfuzzer/efficient_fuzzing.md#efficient-fuzzing-guide>`_
+.. [#] `libFuzzer Tutorial <https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md>`_
+.. [#] `Structure-Aware Fuzzing with libFuzzer <https://github.com/google/fuzzing/blob/master/docs/structure-aware-fuzzing.md>`_
+.. [#] `Efficient Fuzzing Guide <https://chromium.googlesource.com/chromium/src/+/refs/heads/main/testing/libfuzzer/efficient_fuzzing.md#efficient-fuzzing-guide>`_
