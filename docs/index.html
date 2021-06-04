@@ -92,14 +92,50 @@ window.addEventListener('DOMContentLoaded', main);
       <option value="type">Type</option>
     </select>
   </div>
-  
+  <ul class="simple simple-toc" id="toc-list">
+<li>
+  <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
+  <ul class="simple simple-toc-section">
+      <ul class="simple nested-toc-section">main
+      <li><a class="reference" href="#main"
+    title="main()">main()</a></li>
+
+  </ul>
+
+  </ul>
+</li>
+
+</ul>
+
   </div>
-  
+  &nbsp;&nbsp;<a
+href="https://github.com/planetis-m/libfuzzer/tree/devel/fuzztarget.nim#L1"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/fuzztarget.nim#L1" class="link-seesrc" target="_blank" >Edit</a>
+
   <div class="nine columns" id="content">
   <div id="tocRoot"></div>
   
   <p class="module-desc">NOTE: the libFuzzer interface is thin and in the majority of cases all you need is to define the procedure <tt class="docutils literal"><span class="pre"><span class="Identifier">testOneInput</span></span></tt> in your file.</p>
-  
+  <div class="section" id="12">
+<h1><a class="toc-backref" href="#12">Procs</a></h1>
+<dl class="item">
+<a id="main"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#main"><span class="Identifier">main</span></a><span class="Other">(</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+<p>Standalone main procedure for fuzz targets.</p>
+<p>Use <tt class="docutils literal"><span class="pre"><span class="Operator">-</span><span class="Identifier">d</span><span class="Punctuation">:</span><span class="Identifier">fuzzSa</span></span></tt> to include this file to provide reproducers for bugs when linking against libFuzzer or other fuzzing engines is undesirable.</p>
+
+&nbsp;&nbsp;<a
+href="https://github.com/planetis-m/libfuzzer/tree/devel/standalone.nim#L3"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/standalone.nim#L3" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+
+</dl></div>
+
   </div>
 </div>
 
@@ -107,7 +143,7 @@ window.addEventListener('DOMContentLoaded', main);
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 11:29:20 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 11:47:35 UTC</small>
       </div>
     </div>
   </div>

@@ -13,9 +13,9 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implem
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.
 
-when defined(fuzzSa):
+when defined(fuzzSa) or defined(nimdoc):
   include/standalone
-else:
+when not defined(fuzzSa) or defined(nimdoc):
   proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}
     ## Experimental, may go away in future.

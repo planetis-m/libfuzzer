@@ -4,6 +4,8 @@
 
 Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzing engine.
 
+`Documentation <https://planetis-m.github.io/libfuzzer/>`_
+
 Example
 =======
 
@@ -28,13 +30,13 @@ Installation
 Presentations
 =============
 
-1. Jonathan Metzman [Fuzzing 101](https://www.youtube.com/watch?v=NI2w6eT8p-E)
-1. Justin Bogner [Adventures in Fuzzing Instruction Selection](https://www.youtube.com/watch?v=UBbQ_s6hNgg)
-1. Mateusz Jurczyk [Effective File Format Fuzzing](https://www.youtube.com/watch?v=qTTwqFRD1H8)
+#. Jonathan Metzman [Fuzzing 101](https://www.youtube.com/watch?v=NI2w6eT8p-E)
+#. Justin Bogner [Adventures in Fuzzing Instruction Selection](https://www.youtube.com/watch?v=UBbQ_s6hNgg)
+#. Mateusz Jurczyk [Effective File Format Fuzzing](https://www.youtube.com/watch?v=qTTwqFRD1H8)
 
 Further Readings
 ================
 
-1. [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
-1. [Structure-Aware Fuzzing with libFuzzer](https://github.com/google/fuzzing/blob/master/docs/structure-aware-fuzzing.md)
-1. [Efficient Fuzzing Guide](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/testing/libfuzzer/efficient_fuzzing.md#efficient-fuzzing-guide)
+#. [libFuzzer Tutorial](https://github.com/google/fuzzing/blob/master/tutorial/libFuzzerTutorial.md)
+#. [Structure-Aware Fuzzing with libFuzzer](https://github.com/google/fuzzing/blob/master/docs/structure-aware-fuzzing.md)
+#. [Efficient Fuzzing Guide](https://chromium.googlesource.com/chromium/src/+/refs/heads/main/testing/libfuzzer/efficient_fuzzing.md#efficient-fuzzing-guide)
