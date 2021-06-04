@@ -1,14 +1,14 @@
 ## NOTE: the libFuzzer interface is thin and in the majority of cases
 ## all you need is to define the procedure `testOneInput` in your file.
 
-proc testOneInput(data: openarray[byte]): cint {.
+proc testOneInput*(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} = discard "to implement"
   ## Mandatory user-provided target procedure.
   ## Executes the code under test with `data` as the input.
   ## libFuzzer will invoke this procedure *many* times with different inputs.
   ## Must return 0.
 
-proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implement"
+proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implement"
   ## Optional user-provided initialization procedure.
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.
@@ -16,21 +16,21 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implem
 when defined(fuzzSa) or defined(nimdoc):
   include/standalone
 when not defined(fuzzSa) or defined(nimdoc):
-  proc mutate(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
+  proc mutate*(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}
     ## Experimental, may go away in future.
     ## libFuzzer-provided procedure to be used inside `customMutator`.
     ## Mutates raw data in `data..<data+len` inplace.
     ## Returns the new length, which is not greater than `maxLen`.
 
-  proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
+  proc customMutator*(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
       exportc: "LLVMFuzzerCustomMutator".} = discard "to implement"
     ## Optional user-provided custom mutator.
     ## Mutates raw data in `data..<data+len` inplace.
     ## Returns the new length, which is not greater than `maxLen`.
     ## Given the same `seed` produces the same mutation.
 
-  proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
+  proc customCrossOver*(data1: openarray[byte], data2: openarray[byte],
       res: var openarray[byte], seed: int64): int {.
       exportc: "LLVMFuzzerCustomCrossOver".} = discard "to implement"
     ## Optional user-provided custom cross-over procedure.

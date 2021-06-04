@@ -4,7 +4,7 @@
 
 Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzing engine.
 
-`Documentation <https://planetis-m.github.io/libfuzzer/>`_
+`Documentation <https://planetis-m.github.io/libfuzzer/libfuzzer.html>`_
 
 Example
 =======
