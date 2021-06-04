@@ -29,7 +29,7 @@ In 95% of cases all you need is to define the procedure ``testOneInput`` in your
 Compile with: ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g``
 
 Structure-Aware Fuzzing
------------------------
+=======================
 
   But the lack of an input grammar can also result in inefficient fuzzing
   for complicated input types, where any traditional mutation (e.g. bit
@@ -38,16 +38,16 @@ Structure-Aware Fuzzing
   can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine
   for a specific input type.
 
-*—source* [5]_
+— [5]_
 
 Take a look at the snappy compression `example <examples/compress/>`_.
 
 Installation
 ============
 
-- Copy the files ``libfuzzer/fuzztarget.{nim,nims}`` at your testing directory.
+- Copy the files ``libfuzzer/fuzztarget.{nim,nims}``, ``libfuzzer/standalone.nim`` at your testing directory.
 - Fill in the implementations of the exported procedures.
-- Compile the file and run with an empty corpus directory as an argument.
+- Compile and run with an empty corpus directory as an argument.
 
 Presentations
 =============

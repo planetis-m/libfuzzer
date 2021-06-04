@@ -14,7 +14,7 @@ proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to imple
   ## Must return 0.
 
 when defined(fuzzSa) or defined(nimdoc):
-  include/standalone
+  include standalone
 when not defined(fuzzSa) or defined(nimdoc):
   proc mutate*(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}

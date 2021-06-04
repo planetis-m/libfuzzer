@@ -1,12 +1,16 @@
-import nake, std/[os, strformat]
+import nake, std/strformat
 
-task "doc", "Generate documentation":
+task "docs", "Generate documentation":
+  # https://nim-lang.github.io/Nim/docgen.html
   let
-    src = "libfuzzer/" / "fuzztarget.nim"
+    name = "fuzztarget.nim"
+    src = "libfuzzer/" / name
     dir = "docs/"
-    doc = dir / src.changeFileExt(".html")
+    doc = dir / name.changeFileExt(".html")
     url = "https://github.com/planetis-m/libfuzzer"
   if doc.needsRefresh(src):
-    direShell(nimExe, &" doc --git.url:{url} --git.devel:master --git.commit:master --out:{dir} {src}")
+    echo "Generating the docs..."
+    direShell(nimExe, "doc --verbosity:0",
+        &"--git.url:{url} --git.devel:master --git.commit:master --out:{dir} {src}")
   else:
-    echo "Generating docs skipped"
+    echo "Generating the docs skipped."
