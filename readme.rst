@@ -31,16 +31,22 @@ Compile with ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitiz
 Structure-Aware Fuzzing
 -----------------------
 
-From `Structure-Aware Fuzzing with libFuzzer`
+From ``Structure-Aware Fuzzing with libFuzzer`:
 
-> But the lack of an input grammar can also result in inefficient fuzzing for complicated input types, where any traditional mutation (e.g. bit flipping) leads to an invalid input rejected by the target API in the early stage of parsing. With some additional effort, however, libFuzzer can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine for a specific input type.
+  But the lack of an input grammar can also result in inefficient fuzzing
+  for complicated input types, where any traditional mutation (e.g. bit
+  flipping) leads to an invalid input rejected by the target API in the
+  early stage of parsing. With some additional effort, however, libFuzzer
+  can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine
+  for a specific input type.
 
-See the example in the `compress <examples/compress/>`_ directory.
+
+Take a look at the snappy compression `example <examples/compress/>`_.
 
 Installation
 ============
 
-- Copy the files `fuzztarget.{nim,nims}` at your testing directory.
+- Copy the files ``fuzztarget.{nim,nims}`` at your testing directory.
 - Fill in the implementations of the exported procedures.
 - Compile the file and run with an empty corpus directory as an argument.
 
