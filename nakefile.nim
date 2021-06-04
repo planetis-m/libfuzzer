@@ -2,7 +2,7 @@ import nake, std/[os, strformat]
 
 task "doc", "Generate documentation":
   let
-    src = "fuzztarget.nim"
+    src = "src/" / "fuzztarget.nim"
     dir = "docs/"
     doc = dir / src.changeFileExt(".html")
     url = "https://github.com/planetis-m/libfuzzer"

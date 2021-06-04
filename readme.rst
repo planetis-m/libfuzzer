@@ -4,7 +4,7 @@
 
 Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzing engine.
 
-`Documentation <https://planetis-m.github.io/libfuzzer/fuzztarget.html>`_
+Read the `Documentation <https://planetis-m.github.io/libfuzzer/fuzztarget.html>`_
 
 Example
 =======
@@ -26,12 +26,10 @@ In 95% of cases all you need is to define the procedure ``testOneInput`` in your
     discard fuzzMe(data)
 
 
-Compile with ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g``.
+Compile with: ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g``
 
 Structure-Aware Fuzzing
 -----------------------
-
-From [2]_:
 
   But the lack of an input grammar can also result in inefficient fuzzing
   for complicated input types, where any traditional mutation (e.g. bit
@@ -40,13 +38,14 @@ From [2]_:
   can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine
   for a specific input type.
 
+*Source* [2]_
 
 Take a look at the snappy compression `example <examples/compress/>`_.
 
 Installation
 ============
 
-- Copy the files ``fuzztarget.{nim,nims}`` at your testing directory.
+- Copy the files ``libfuzzer/fuzztarget.{nim,nims}`` at your testing directory.
 - Fill in the implementations of the exported procedures.
 - Compile the file and run with an empty corpus directory as an argument.
 
