@@ -63,7 +63,7 @@ Coverage report
 
 Use `Clang Coverage <http://clang.llvm.org/docs/SourceBasedCodeCoverage.html>`_ to visualize and study your code coverage.
 
-Include the `standalone <libfuzzer/standalone>`_ main procedure for fuzz targets. Follow the instructions given at
+Include the `standalone <libfuzzer/standalone.nim>`_ main procedure for fuzz targets. Follow the instructions given at
 the `test coverage <tests/tcov.nim>`_ example. When running the executable, pass as parameter a list of test units.
 
 Structure-Aware Fuzzing
@@ -76,7 +76,7 @@ Structure-Aware Fuzzing
   can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine
   for a specific input type.
 
-—*Structure-Aware Fuzzing with libFuzzer* [6]_
+—*Structure-Aware Fuzzing with libFuzzer* [5]_
 
 Take a look at the snappy compression `example <examples/compress/>`_.
 
@@ -92,7 +92,6 @@ Presentations
 
 .. [#] Jonathan Metzman `Fuzzing 101 <https://www.youtube.com/watch?v=NI2w6eT8p-E>`_
 .. [#] Kostya Serebryany `Fuzz or lose... <https://www.youtube.com/watch?v=k-Cv8Q3zWNQ>`_
-.. [#] Mateusz Jurczyk `Effective File Format Fuzzing <https://www.youtube.com/watch?v=qTTwqFRD1H8>`_
 .. [#] Kostya Serebryany `Sanitize your C++ code <https://www.youtube.com/watch?v=V2_80g0eOMc>`_
 
 Further Readings
