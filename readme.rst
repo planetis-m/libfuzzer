@@ -4,6 +4,16 @@
 
 Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzing engine.
 
+Introduction
+============
+
+Fuzzing is a type of automated testing which continuously manipulates inputs to
+a program to find issues such as panics or bugs. These semi-random data mutations
+can discover new code coverage that existing unit tests may miss, and uncover
+edge case bugs which would otherwise go unnoticed. Since fuzzing can reach these
+edge cases, fuzz testing is particularly valuable for finding security exploits
+and vulnerabilities.
+
 Read the `Documentation <https://planetis-m.github.io/libfuzzer/fuzztarget.html>`_
 
 Example
@@ -26,7 +36,7 @@ In 95% of cases all you need is to define the procedure ``testOneInput`` in your
     discard fuzzMe(data)
 
 
-Compile with: ``--cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g``
+Compile with: ``nim c --cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g tfuzz.nim``
 
 Structure-Aware Fuzzing
 =======================
