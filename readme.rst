@@ -2,7 +2,8 @@
                         libFuzzer
 =========================================================
 
-Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzing engine.
+Thin interface for LLVM/Clang libFuzzer, an in-process, coverage-guided,
+evolutionary fuzzing engine.
 
 Introduction
 ============
@@ -15,6 +16,20 @@ edge cases, fuzz testing is particularly valuable for finding security exploits
 and vulnerabilities.
 
 Read the `Documentation <https://planetis-m.github.io/libfuzzer/fuzztarget.html>`_
+
+Clang Sanitizers
+================
+
+Sanitizers are compiler build-in error detectors with relatively small runtime
+cost. Clang has:
+
+- `AddressSanitizer <https://clang.llvm.org/docs/AddressSanitizer.html>`_ - use-after-free, double-free, ...
+- `MemorySanitizer <https://clang.llvm.org/docs/MemorySanitizer.html>`_ - uninitialized reads
+- `UndefinedBehaviourSanitizer <https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html>`_ - overflows, divide by zero, ...
+- `ThreadSanitizer <https://clang.llvm.org/docs/ThreadSanitizer.html>`_ - data races
+
+For more information watch the talk *Sanitize your C++ code* [4]_
+There are demos at the `tests <tests/>`_ directory.
 
 Example
 =======
@@ -36,7 +51,20 @@ In 95% of cases all you need is to define the procedure ``testOneInput`` in your
     discard fuzzMe(data)
 
 
-Compile with: ``nim c --cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g tfuzz.nim``
+Compile with:
+
+.. code-block::
+
+  $ nim c --cc:clang -t:"-fsanitize=fuzzer,address" -l:"-fsanitize=fuzzer,address" -d:nosignalhandler --nomain:on -g tfuzz.nim
+
+
+Coverage report
+===============
+
+Use `Clang Coverage <http://clang.llvm.org/docs/SourceBasedCodeCoverage.html>`_ to visualize and study your code coverage.
+
+Include the `standalone <libfuzzer/standalone>`_ main procedure for fuzz targets. Follow the instructions given at
+the `test coverage <tests/tcov.nim>`_ example. When running the executable, pass as parameter a list of test units.
 
 Structure-Aware Fuzzing
 =======================
@@ -48,7 +76,7 @@ Structure-Aware Fuzzing
   can be turned into a grammar-aware (i.e. structure-aware) fuzzing engine
   for a specific input type.
 
-—*Structure-Aware Fuzzing with libFuzzer* [5]_
+—*Structure-Aware Fuzzing with libFuzzer* [6]_
 
 Take a look at the snappy compression `example <examples/compress/>`_.
 
@@ -63,8 +91,9 @@ Presentations
 =============
 
 .. [#] Jonathan Metzman `Fuzzing 101 <https://www.youtube.com/watch?v=NI2w6eT8p-E>`_
-.. [#] Justin Bogner `Adventures in Fuzzing Instruction Selection <https://www.youtube.com/watch?v=UBbQ_s6hNgg>`_
+.. [#] Kostya Serebryany `Fuzz or lose... <https://www.youtube.com/watch?v=k-Cv8Q3zWNQ>`_
 .. [#] Mateusz Jurczyk `Effective File Format Fuzzing <https://www.youtube.com/watch?v=qTTwqFRD1H8>`_
+.. [#] Kostya Serebryany `Sanitize your C++ code <https://www.youtube.com/watch?v=V2_80g0eOMc>`_
 
 Further Readings
 ================

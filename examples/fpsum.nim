@@ -6,6 +6,8 @@ proc sum(x: openArray[float]): float =
   for b in items(x):
     result = if isNaN(b): result else: result + b
 
+proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
+
 proc testOneInput(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
 
@@ -14,7 +16,7 @@ proc testOneInput(data: openarray[byte]): cint {.
 
   let res = sum(toOpenArray(data, 0, n-1))
   if isNaN(res):
-    quit()
+    quitOrDebug()
   result = 0
 
 proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
@@ -51,8 +53,7 @@ proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64
       result = gen.rand(-1.0..1.0)
 
   case gen.rand(3)
-  of 0:
-    # Change element
+  of 0: # Change element
     if n > 0:
       data[gen.rand(0..<n)] = rfp(gen)
   of 1: # Add element
