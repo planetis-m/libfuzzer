@@ -1,4 +1,8 @@
-# Compare asm with C program for interceptors
+# https://www.moritz.systems/blog/an-introduction-to-llvm-libfuzzer/
+# Compiling with and without asan builtin interceptors "-fsanitize=fuzzer,address"
+# ./tstring -runs=1000000
+
+proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 
 proc testOneInput*(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
@@ -7,16 +11,4 @@ proc testOneInput*(data: openarray[byte]): cint {.
     copyMem(cstring(copy), cast[cstring](data), copy.len)
     if copy == "qwerty":
       stderr.write("BINGO\n")
-      quit(1)
-
-proc strcmp(a, b: cstring): cint {.noSideEffect,
-    importc, header: "<string.h>".}
-
-#proc testOneInput*(data: openarray[byte]): cint {.
-    #exportc: "LLVMFuzzerTestOneInput".} =
-  #if data.len >= 7:
-    #var copy = newString(6)
-    #copyMem(cstring(copy), cast[cstring](data), copy.len)
-    #if strcmp(cstring(copy), cstring"qwerty") == 0:
-      #stderr.write("BINGO\n")
-      #quit(1)
+      quitOrDebug()

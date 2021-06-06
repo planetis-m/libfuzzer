@@ -63,8 +63,9 @@ Coverage report
 
 Use `Clang Coverage <http://clang.llvm.org/docs/SourceBasedCodeCoverage.html>`_ to visualize and study your code coverage.
 
-Include the `standalone <libfuzzer/standalone.nim>`_ main procedure for fuzz targets. Follow the instructions given at
-the `test coverage <tests/tcov.nim>`_ example. When running the executable, pass as parameter a list of test units.
+- Include the `standalone <libfuzzer/standalone.nim>`_ main procedure for fuzz targets.
+- Follow the instructions given at the `test coverage <tests/tcov.nim>`_ example.
+- When running the executable, pass as parameter a list of test units.
 
 Structure-Aware Fuzzing
 =======================

@@ -1,3 +1,5 @@
+# Compile with the following flags
+# For explanation: https://nim-lang.github.io/Nim/nimc.html
 # --panics:on --gc:arc -d:useMalloc --cc:clang -t:"-fprofile-instr-generate -fcoverage-mapping"
 # -l:"-fprofile-instr-generate -fcoverage-mapping" -d:danger
 # Run the executable
