@@ -8,9 +8,9 @@ type
     width, height: cint
     data: array[10, char]
 
-proc testOneInput(data: openarray[byte]): cint {.
+proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
-  if data.len <= 12:
+  if len <= 12:
     return 0
   let img = cast[ptr Image](data)
   # integer overflow 0x7FFFFFFF+1=0

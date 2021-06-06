@@ -8,29 +8,30 @@ var
   sink: int
   printed: int
 
-proc testOneInput(data: openarray[byte]): cint {.
+proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
   result = 0
   const targetHash = hash(Target)
-  var strHash = hash(data)
+  var strHash = hash(data.toOpenArray(0, len-1))
   # Ensure we have 'A' and 'B' in the corpus.
-  if data.len == 1 and data[0] == byte'A':
+  if len == 1 and data[0] == byte'A':
     inc(sink)
-  if data.len == 1 and data[0] == byte'B':
+  if len == 1 and data[0] == byte'B':
     dec(sink)
   if targetHash == strHash:
     quit "BINGO; Found the target, exiting"
 
-proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
-    res: var openarray[byte], seed: int64): int {.
+proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
+    data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
+    maxResLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomCrossOver".} =
   const separatorLen = len(Separator)
   if printed < 32:
-    stderr.write &"In customCrossover {data1.len} {data2.len}\n"
+    stderr.write &"In customCrossover {len1} {len2}\n"
   inc(printed)
-  result = data1.len + data2.len + separatorLen
-  if result > res.len:
+  result = len1 + len2 + separatorLen
+  if result > maxResLen:
     return 0
-  for i in 0..<data1.len: res[i] = data1[i]
-  for i in 0..<separatorLen: res[i+data1.len] = Separator[i].byte
-  for i in 0..<data2.len: res[i+data1.len+separatorLen] = data2[i]
+  for i in 0..<len1: res[i] = data1[i]
+  for i in 0..<separatorLen: res[i+len1] = Separator[i].byte
+  for i in 0..<len2: res[i+len1+separatorLen] = data2[i]

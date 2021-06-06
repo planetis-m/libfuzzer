@@ -1,7 +1,7 @@
 ## NOTE: the libFuzzer interface is thin and in the majority of cases
 ## all you need is to define the procedure `testOneInput` in your file.
 
-proc testOneInput*(data: openarray[byte]): cint {.
+proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} = discard "to implement"
   ## Mandatory user-provided target procedure.
   ## Executes the code under test with `data` as the input.
@@ -30,10 +30,11 @@ when not defined(fuzzSa) or defined(nimdoc):
     ## Returns the new length, which is not greater than `maxLen`.
     ## Given the same `seed` produces the same mutation.
 
-  proc customCrossOver*(data1: openarray[byte], data2: openarray[byte],
-      res: var openarray[byte], seed: int64): int {.
+  proc customCrossOver*(data1: ptr UncheckedArray[byte], len1: int,
+      data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
+      maxResLen: int, seed: int64): int {.
       exportc: "LLVMFuzzerCustomCrossOver".} = discard "to implement"
     ## Optional user-provided custom cross-over procedure.
     ## Combines pieces of `data1` & `data2` together into `res`.
-    ## Returns the new length, which is not greater than `res.len`.
+    ## Returns the new length, which is not greater than `maxResLen`.
     ## Should produce the same mutation given the same `seed`.

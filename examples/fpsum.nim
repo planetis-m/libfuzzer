@@ -8,11 +8,10 @@ proc sum(x: openArray[float]): float =
 
 proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 
-proc testOneInput(data: openarray[byte]): cint {.
+proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
-
-  var copy = newSeq[float](data.len div sizeof(float))
-  copyMem(addr copy[0], cast[pointer](data), copy.len * sizeof(float))
+  var copy = newSeq[float](len div sizeof(float))
+  copyMem(addr copy[0], data, copy.len * sizeof(float))
 
   let res = sum(copy)
   if isNaN(res):
@@ -70,26 +69,26 @@ proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64
   else:
     result = 0
 
-proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
-    res: var openarray[byte], seed: int64): int {.
+proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
+    data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
+    maxResLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomCrossOver".} =
+  var copy1 = newSeq[float](len1 div sizeof(float))
+  copyMem(addr copy1[0], data1, copy1.len * sizeof(float))
 
-  var copy1 = newSeq[float](data1.len div sizeof(float))
-  copyMem(addr copy1[0], cast[pointer](data1), copy1.len * sizeof(float))
+  var copy2 = newSeq[float](len2 div sizeof(float))
+  copyMem(addr copy2[0], data2, copy2.len * sizeof(float))
 
-  var copy2 = newSeq[float](data2.len div sizeof(float))
-  copyMem(addr copy2[0], cast[pointer](data2), copy2.len * sizeof(float))
-
-  let len = min(copy1.len, min(copy2.len, res.len div sizeof(float)))
+  let len = min(copy1.len, min(copy2.len, maxResLen div sizeof(float)))
   var buf = newSeq[float](len)
-  copyMem(addr buf[0], cast[pointer](res), buf.len * sizeof(float))
+  copyMem(addr buf[0], res, buf.len * sizeof(float))
 
   var gen = initRand(seed)
   for i in 0 ..< buf.len:
     buf[i] = if gen.rand(1.0) <= 0.5: copy1[i] else: copy2[i]
 
   result = buf.len * sizeof(float)
-  if result <= res.len:
-    copyMem(cast[pointer](res), addr buf[0], result)
+  if result <= maxResLen:
+    copyMem(res, addr buf[0], result)
   else:
     result = 0

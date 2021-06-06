@@ -10,7 +10,7 @@ proc standaloneFuzzTarget* =
   for i in 1..paramCount():
     stderr.write &"Running: {paramStr(i)}\n"
     let buf = readFile(paramStr(i))
-    discard testOneInput(toOpenArrayByte(buf, 0, buf.high))
+    discard testOneInput(cast[ptr UncheckedArray[byte]](buf), buf.len)
     stderr.write &"Done:    {paramStr(i)}: ({formatSize(buf.len)})\n"
 
 standaloneFuzzTarget()

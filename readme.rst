@@ -46,9 +46,10 @@ In 95% of cases all you need is to define the procedure ``testOneInput`` in your
       data[2].char == 'Z' and
       data[3].char == 'Z' # :‑<
 
-  proc testOneInput(data: openarray[byte]): cint {.exportc: "LLVMFuzzerTestOneInput".} =
+  proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
+      exportc: "LLVMFuzzerTestOneInput".} =
     result = 0
-    discard fuzzMe(data)
+    discard fuzzMe(data.toOpenArray(0, len-1))
 
 
 Compile with:

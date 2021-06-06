@@ -4,9 +4,9 @@
 
 proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 
-proc testOneInput*(data: openarray[byte]): cint {.
+proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
-  if data.len >= 7:
+  if len >= 7:
     var copy = newString(6)
     copyMem(cstring(copy), cast[cstring](data), copy.len)
     if copy == "qwerty":

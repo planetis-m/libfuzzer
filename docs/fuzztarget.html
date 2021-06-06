@@ -97,8 +97,8 @@ window.addEventListener('DOMContentLoaded', main);
   <a class="reference reference-toplevel" href="#12" id="62">Procs</a>
   <ul class="simple simple-toc-section">
       <ul class="simple nested-toc-section">testOneInput
-      <li><a class="reference" href="#testOneInput%2CopenArray%5Bbyte%5D"
-    title="testOneInput(data: openArray[byte]): cint">testOneInput(data: openArray[byte]): cint</a></li>
+      <li><a class="reference" href="#testOneInput%2Cptr.UncheckedArray%5Bbyte%5D%2Cint"
+    title="testOneInput(data: ptr UncheckedArray[byte]; len: int): cint">testOneInput(data: ptr UncheckedArray[byte]; len: int): cint</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">customMutator
@@ -107,10 +107,12 @@ window.addEventListener('DOMContentLoaded', main);
 
   </ul>
   <ul class="simple nested-toc-section">customCrossOver
-      <li><a class="reference" href="#customCrossOver%2CopenArray%5Bbyte%5D%2CopenArray%5Bbyte%5D%2CopenArray%5Bbyte%5D%2Cint64"
-    title="customCrossOver(data1: openArray[byte]; data2: openArray[byte];
-                res: var openArray[byte]; seed: int64): int">customCrossOver(data1: openArray[byte]; data2: openArray[byte];
-                res: var openArray[byte]; seed: int64): int</a></li>
+      <li><a class="reference" href="#customCrossOver%2Cptr.UncheckedArray%5Bbyte%5D%2Cint%2Cptr.UncheckedArray%5Bbyte%5D%2Cint%2Cptr.UncheckedArray%5Bbyte%5D%2Cint%2Cint64"
+    title="customCrossOver(data1: ptr UncheckedArray[byte]; len1: int;
+                data2: ptr UncheckedArray[byte]; len2: int;
+                res: ptr UncheckedArray[byte]; maxResLen: int; seed: int64): int">customCrossOver(data1: ptr UncheckedArray[byte]; len1: int;
+                data2: ptr UncheckedArray[byte]; len2: int;
+                res: ptr UncheckedArray[byte]; maxResLen: int; seed: int64): int</a></li>
 
   </ul>
   <ul class="simple nested-toc-section">initialize
@@ -147,8 +149,8 @@ class="link-seesrc" target="_blank">Source</a>
   <div class="section" id="12">
 <h1><a class="toc-backref" href="#12">Procs</a></h1>
 <dl class="item">
-<a id="testOneInput,openArray[byte]"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#testOneInput%2CopenArray%5Bbyte%5D"><span class="Identifier">testOneInput</span></a><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">cint</span> {.
+<a id="testOneInput,ptr.UncheckedArray[byte],int"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#testOneInput%2Cptr.UncheckedArray%5Bbyte%5D%2Cint"><span class="Identifier">testOneInput</span></a><span class="Other">(</span><span class="Identifier">data</span><span class="Other">:</span> <span class="Keyword">ptr</span> <span class="Identifier">UncheckedArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">len</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">cint</span> {.
     <span class="Identifier">exportc</span><span class="Other">:</span> <span class="StringLit">&quot;LLVMFuzzerTestOneInput&quot;</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
@@ -208,13 +210,14 @@ class="link-seesrc" target="_blank">Source</a>
 &nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L26" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="customCrossOver,openArray[byte],openArray[byte],openArray[byte],int64"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#customCrossOver%2CopenArray%5Bbyte%5D%2CopenArray%5Bbyte%5D%2CopenArray%5Bbyte%5D%2Cint64"><span class="Identifier">customCrossOver</span></a><span class="Other">(</span><span class="Identifier">data1</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">data2</span><span class="Other">:</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span>
-                     <span class="Identifier">res</span><span class="Other">:</span> <span class="Keyword">var</span> <span class="Identifier">openArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">seed</span><span class="Other">:</span> <span class="Identifier">int64</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
+<a id="customCrossOver,ptr.UncheckedArray[byte],int,ptr.UncheckedArray[byte],int,ptr.UncheckedArray[byte],int,int64"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#customCrossOver%2Cptr.UncheckedArray%5Bbyte%5D%2Cint%2Cptr.UncheckedArray%5Bbyte%5D%2Cint%2Cptr.UncheckedArray%5Bbyte%5D%2Cint%2Cint64"><span class="Identifier">customCrossOver</span></a><span class="Other">(</span><span class="Identifier">data1</span><span class="Other">:</span> <span class="Keyword">ptr</span> <span class="Identifier">UncheckedArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">len1</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span>
+                     <span class="Identifier">data2</span><span class="Other">:</span> <span class="Keyword">ptr</span> <span class="Identifier">UncheckedArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">len2</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span>
+                     <span class="Identifier">res</span><span class="Other">:</span> <span class="Keyword">ptr</span> <span class="Identifier">UncheckedArray</span><span class="Other">[</span><span class="Identifier">byte</span><span class="Other">]</span><span class="Other">;</span> <span class="Identifier">maxResLen</span><span class="Other">:</span> <span class="Identifier">int</span><span class="Other">;</span> <span class="Identifier">seed</span><span class="Other">:</span> <span class="Identifier">int64</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">int</span> {.
     <span class="Identifier">exportc</span><span class="Other">:</span> <span class="StringLit">&quot;LLVMFuzzerCustomCrossOver&quot;</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
 <dd>
 
-Optional user-provided custom cross-over procedure. Combines pieces of <tt class="docutils literal"><span class="pre"><span class="Identifier">data1</span></span></tt> &amp; <tt class="docutils literal"><span class="pre"><span class="Identifier">data2</span></span></tt> together into <tt class="docutils literal"><span class="pre"><span class="Identifier">res</span></span></tt>. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">res</span><span class="Operator">.</span><span class="Identifier">len</span></span></tt>. Should produce the same mutation given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt>.
+Optional user-provided custom cross-over procedure. Combines pieces of <tt class="docutils literal"><span class="pre"><span class="Identifier">data1</span></span></tt> &amp; <tt class="docutils literal"><span class="pre"><span class="Identifier">data2</span></span></tt> together into <tt class="docutils literal"><span class="pre"><span class="Identifier">res</span></span></tt>. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxResLen</span></span></tt>. Should produce the same mutation given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt>.
 &nbsp;&nbsp;<a
 href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L33"
 class="link-seesrc" target="_blank">Source</a>
@@ -231,7 +234,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-04 18:34:01 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-06 12:52:43 UTC</small>
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
 import snappy, std/strutils
 
-proc testOneInput(data: openarray[byte]): cint {.
+proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
   # Decompress the input data and crash if it starts with "boom".
-  let data = cast[string](uncompress(data))
+  let data = cast[string](uncompress(data.toOpenArray(0, len-1)))
   if data.startsWith("boom"): quit(QuitFailure)
 
 proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard
