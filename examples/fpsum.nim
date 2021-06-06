@@ -11,20 +11,20 @@ proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 proc testOneInput(data: openarray[byte]): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
 
-  let n = data.len div sizeof(float)
-  let data = cast[ptr UncheckedArray[float]](data)
+  var copy = newSeq[float](data.len div sizeof(float))
+  copyMem(addr copy[0], cast[pointer](data), copy.len * sizeof(float))
 
-  let res = sum(toOpenArray(data, 0, n-1))
+  let res = sum(copy)
   if isNaN(res):
+    echo copy
     quitOrDebug()
   result = 0
 
 proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomMutator".} =
 
-  var n = len div sizeof(float)
-  let data = cast[ptr UncheckedArray[float]](data)
-
+  var copy = newSeq[float](len div sizeof(float))
+  copyMem(addr copy[0], data, copy.len * sizeof(float))
   var gen = initRand(seed)
 
   proc rfp(gen: var Rand): float =
@@ -54,32 +54,42 @@ proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64
 
   case gen.rand(3)
   of 0: # Change element
-    if n > 0:
-      data[gen.rand(0..<n)] = rfp(gen)
+    if copy.len > 0:
+      copy[gen.rand(0..<copy.len)] = rfp(gen)
   of 1: # Add element
-    if n <= maxLen div sizeof(float):
-      data[n] = rfp(gen)
-      inc n
+      copy.add rfp(gen)
   of 2: # Delete element
-    if n > 0:
-      dec n
+    if copy.len > 0:
+      discard copy.pop
   else: # Shuffle elements
-    # toOpenArray, issue #15745
-    for i in countdown(n-1, 1):
-      let j = gen.rand(i)
-      swap(data[i], data[j])
-  result = n * sizeof(float)
+    gen.shuffle(copy)
+
+  result = copy.len * sizeof(float)
+  if result <= maxLen:
+    copyMem(data, addr copy[0], result)
+  else:
+    result = 0
 
 proc customCrossOver(data1: openarray[byte], data2: openarray[byte],
     res: var openarray[byte], seed: int64): int {.
     exportc: "LLVMFuzzerCustomCrossOver".} =
 
-  let n = min(data1.len, min(data2.len, res.len)) div sizeof(float)
-  let data1 = cast[ptr UncheckedArray[float]](data1)
-  let data2 = cast[ptr UncheckedArray[float]](data2)
-  let res = cast[ptr UncheckedArray[float]](res)
+  var copy1 = newSeq[float](data1.len div sizeof(float))
+  copyMem(addr copy1[0], cast[pointer](data1), copy1.len * sizeof(float))
+
+  var copy2 = newSeq[float](data2.len div sizeof(float))
+  copyMem(addr copy2[0], cast[pointer](data2), copy2.len * sizeof(float))
+
+  let len = min(copy1.len, min(copy2.len, res.len div sizeof(float)))
+  var buf = newSeq[float](len)
+  copyMem(addr buf[0], cast[pointer](res), buf.len * sizeof(float))
 
   var gen = initRand(seed)
-  for i in 0 ..< n:
-    res[i] = if gen.rand(1.0) <= 0.5: data1[i] else: data2[i]
-  result = n * sizeof(float)
+  for i in 0 ..< buf.len:
+    buf[i] = if gen.rand(1.0) <= 0.5: copy1[i] else: copy2[i]
+
+  result = buf.len * sizeof(float)
+  if result <= res.len:
+    copyMem(cast[pointer](res), addr buf[0], result)
+  else:
+    result = 0
