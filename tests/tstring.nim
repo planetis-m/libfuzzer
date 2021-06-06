@@ -1,5 +1,5 @@
 # https://www.moritz.systems/blog/an-introduction-to-llvm-libfuzzer/
-# Compiling with and without asan builtin interceptors "-fsanitize=fuzzer,address"
+# Compile with and without asan builtin interceptors "-fsanitize=fuzzer(,address)"
 # ./tstring -runs=1000000
 
 proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}

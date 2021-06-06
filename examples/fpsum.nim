@@ -57,7 +57,7 @@ proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64
     if n > 0:
       data[gen.rand(0..<n)] = rfp(gen)
   of 1: # Add element
-    if n <= maxLen:
+    if n <= maxLen div sizeof(float):
       data[n] = rfp(gen)
       inc n
   of 2: # Delete element
