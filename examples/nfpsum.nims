@@ -1,5 +1,6 @@
 --cc: clang
 --debugger: native # ignored
+#--header
 --define: noSignalHandler
 --define: useMalloc
 when not defined(fuzzSa):

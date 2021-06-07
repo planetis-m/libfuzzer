@@ -7,7 +7,7 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
   if data.startsWith("boom"): quit(QuitFailure)
 
 proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
-  {.emit: "N_LIB_PRIVATE void PreMain(void); PreMain();".}
+  {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
 when defined(fuzzSa):
   include libfuzzer/standalone
