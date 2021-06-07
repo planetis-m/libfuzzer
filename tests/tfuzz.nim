@@ -10,6 +10,9 @@ proc fuzzMe(data: openarray[byte]): bool =
     data[2].char == 'Z' and
     data[3].char == 'Z' # :‑<
 
+proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
+  {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
+
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
   result = 0
