@@ -21,7 +21,8 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     quitOrDebug()
 
 proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
-  {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
+  when not defined(fuzzSa):
+    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
 when defined(fuzzSa):
   include libfuzzer/standalone

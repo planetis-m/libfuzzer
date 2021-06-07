@@ -13,7 +13,9 @@ proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} =
   ## Optional user-provided initialization procedure.
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.
-  {.emit: "N_CDECL(void, NimMain)(void); NimMain();".} # Keep this line
+  when not defined(fuzzSa):
+    # https://nim-lang.github.io/Nim/backends.html#interfacing-backend-code-calling-nim
+    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
   discard "to implement"
 
 when defined(fuzzSa) or defined(nimdoc):
