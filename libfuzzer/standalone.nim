@@ -6,7 +6,7 @@ proc standaloneFuzzTarget* =
   ## Use `-d:fuzzSa` to call `standaloneFuzzTarget` to provide reproducers
   ## for bugs when linking against libFuzzer is undesirable.
   stderr.write &"StandaloneFuzzTarget: running {paramCount()} inputs\n"
-  discard initialize()
+  #discard initialize()
   for i in 1..paramCount():
     stderr.write &"Running: {paramStr(i)}\n"
     var buf = readFile(paramStr(i))

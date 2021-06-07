@@ -161,17 +161,6 @@ class="link-seesrc" target="_blank">Source</a>
 &nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L4" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
-<a id="initialize"></a>
-<dt><pre><span class="Keyword">proc</span> <a href="#initialize"><span class="Identifier">initialize</span></a><span class="Other">(</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">cint</span> {.<span class="Identifier">exportc</span><span class="Other">:</span> <span class="StringLit">&quot;LLVMFuzzerInitialize&quot;</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
-<dd>
-
-Optional user-provided initialization procedure. If provided, this procedure will be called by libFuzzer once at startup. Must return 0.
-&nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L11"
-class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L11" class="link-seesrc" target="_blank" >Edit</a>
-
-</dd>
 <a id="standaloneFuzzTarget"></a>
 <dt><pre><span class="Keyword">proc</span> <a href="#standaloneFuzzTarget"><span class="Identifier">standaloneFuzzTarget</span></a><span class="Other">(</span><span class="Other">)</span> {.<span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">IOError</span><span class="Other">,</span> <span class="Identifier">ValueError</span><span class="Other">]</span><span class="Other">,</span>
                               <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Identifier">WriteIOEffect</span><span class="Other">,</span> <span class="Identifier">ReadIOEffect</span><span class="Other">]</span></span>.}</pre></dt>
@@ -184,6 +173,17 @@ class="link-seesrc" target="_blank">Source</a>
 href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/standalone.nim#L3"
 class="link-seesrc" target="_blank">Source</a>
 &nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/standalone.nim#L3" class="link-seesrc" target="_blank" >Edit</a>
+
+</dd>
+<a id="initialize"></a>
+<dt><pre><span class="Keyword">proc</span> <a href="#initialize"><span class="Identifier">initialize</span></a><span class="Other">(</span><span class="Other">)</span><span class="Other">:</span> <span class="Identifier">cint</span> {.<span class="Identifier">exportc</span><span class="Other">:</span> <span class="StringLit">&quot;LLVMFuzzerInitialize&quot;</span><span class="Other">,</span> <span><span class="Other pragmadots">...</span></span><span class="pragmawrap"><span class="Identifier">raises</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span><span class="Other">,</span> <span class="Identifier">tags</span><span class="Other">:</span> <span class="Other">[</span><span class="Other">]</span></span>.}</pre></dt>
+<dd>
+
+Initialize Nim's internals, which is done calling a NimMain function.
+&nbsp;&nbsp;<a
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L15"
+class="link-seesrc" target="_blank">Source</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L15" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 <a id="mutate,ptr.UncheckedArray[byte],int,int"></a>
@@ -219,9 +219,9 @@ class="link-seesrc" target="_blank">Source</a>
 
 Optional user-provided custom cross-over procedure. Combines pieces of <tt class="docutils literal"><span class="pre"><span class="Identifier">data1</span></span></tt> &amp; <tt class="docutils literal"><span class="pre"><span class="Identifier">data2</span></span></tt> together into <tt class="docutils literal"><span class="pre"><span class="Identifier">res</span></span></tt>. Returns the new length, which is not greater than <tt class="docutils literal"><span class="pre"><span class="Identifier">maxResLen</span></span></tt>. Should produce the same mutation given the same <tt class="docutils literal"><span class="pre"><span class="Identifier">seed</span></span></tt>.
 &nbsp;&nbsp;<a
-href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L34"
+href="https://github.com/planetis-m/libfuzzer/tree/master/libfuzzer/fuzztarget.nim#L35"
 class="link-seesrc" target="_blank">Source</a>
-&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L34" class="link-seesrc" target="_blank" >Edit</a>
+&nbsp;&nbsp;<a href="https://github.com/planetis-m/libfuzzer/edit/master/libfuzzer/fuzztarget.nim#L35" class="link-seesrc" target="_blank" >Edit</a>
 
 </dd>
 
@@ -234,7 +234,7 @@ class="link-seesrc" target="_blank">Source</a>
       <div class="twelve-columns footer">
         <span class="nim-sprite"></span>
         <br/>
-        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-07 09:49:27 UTC</small>
+        <small style="color: var(--hint);">Made with Nim. Generated: 2021-06-07 15:37:59 UTC</small>
       </div>
     </div>
   </div>

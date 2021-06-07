@@ -9,18 +9,14 @@ proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
   ## Must return 0.
   discard "to implement"
 
-proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} =
-  ## Optional user-provided initialization procedure.
-  ## If provided, this procedure will be called by libFuzzer once at startup.
-  ## Must return 0.
-  when not defined(fuzzSa):
-    # https://nim-lang.github.io/Nim/backends.html#interfacing-backend-code-calling-nim
-    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
-  discard "to implement"
-
 when defined(fuzzSa) or defined(nimdoc):
   include standalone
 when not defined(fuzzSa) or defined(nimdoc):
+  proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} =
+    ## Initialize Nim's internals, which is done calling a NimMain function.
+    # https://nim-lang.github.io/Nim/backends.html#interfacing-backend-code-calling-nim
+    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
+
   proc mutate*(data: ptr UncheckedArray[byte], len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}
     ## Experimental, may go away in future.

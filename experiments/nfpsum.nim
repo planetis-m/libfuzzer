@@ -20,13 +20,12 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
   if isNaN(res):
     quitOrDebug()
 
-proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
-  when not defined(fuzzSa):
-    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
-
 when defined(fuzzSa):
   include libfuzzer/standalone
 else:
+  proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
+    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
+
   proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
       exportc: "LLVMFuzzerCustomMutator".} =
 
