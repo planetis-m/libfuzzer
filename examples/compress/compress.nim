@@ -6,7 +6,8 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
   let data = cast[string](uncompress(data.toOpenArray(0, len-1)))
   if data.startsWith("boom"): quit(QuitFailure)
 
-proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard
+proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
+  {.emit: "N_LIB_PRIVATE void PreMain(void); PreMain();".}
 
 when defined(fuzzSa):
   include libfuzzer/standalone

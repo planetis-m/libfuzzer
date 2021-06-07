@@ -10,7 +10,7 @@ type
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput".} =
-  if len <= 12:
+  if len < sizeof(Image):
     return 0
   let img = cast[ptr Image](data)
   # integer overflow 0x7FFFFFFF+1=0

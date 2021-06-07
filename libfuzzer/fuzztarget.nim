@@ -8,7 +8,8 @@ proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
   ## libFuzzer will invoke this procedure *many* times with different inputs.
   ## Must return 0.
 
-proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} = discard "to implement"
+proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} =
+    {.emit: "N_LIB_PRIVATE void PreMain(void); PreMain();".} # Keep this line
   ## Optional user-provided initialization procedure.
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.

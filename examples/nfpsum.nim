@@ -20,7 +20,8 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
   if isNaN(res):
     quitOrDebug()
 
-proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard
+proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
+  {.emit: "N_LIB_PRIVATE void PreMain(void); PreMain();".}
 
 when defined(fuzzSa):
   include libfuzzer/standalone
