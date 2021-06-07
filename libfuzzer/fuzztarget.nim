@@ -9,10 +9,10 @@ proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
   ## Must return 0.
 
 proc initialize*(): cint {.exportc: "LLVMFuzzerInitialize".} =
-    {.emit: "N_LIB_PRIVATE void PreMain(void); PreMain();".} # Keep this line
   ## Optional user-provided initialization procedure.
   ## If provided, this procedure will be called by libFuzzer once at startup.
   ## Must return 0.
+  {.emit: "N_LIB_PRIVATE void PreMain(void); PreMain();".} # Keep this line
 
 when defined(fuzzSa) or defined(nimdoc):
   include standalone
