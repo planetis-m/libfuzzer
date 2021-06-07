@@ -32,7 +32,7 @@ when not defined(fuzzSa) or defined(nimdoc):
     ## Mutates raw data in `data[0..<len]` inplace.
     ## Returns the new length, which is not greater than `maxLen`.
     ## Given the same `seed` produces the same mutation.
-     discard "to implement"
+    discard "to implement"
 
   proc customCrossOver*(data1: ptr UncheckedArray[byte], len1: int,
       data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
