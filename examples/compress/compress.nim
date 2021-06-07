@@ -9,7 +9,7 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
 proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} = discard
 
 when defined(fuzzSa):
-  include standalone
+  include libfuzzer/standalone
 else:
   proc mutate(data: ptr UncheckedArray[byte]; len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}

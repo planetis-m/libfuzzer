@@ -15,7 +15,6 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
 
   let res = sum(copy)
   if isNaN(res):
-    echo copy
     quitOrDebug()
   result = 0
 
@@ -56,7 +55,7 @@ proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64
     if copy.len > 0:
       copy[gen.rand(0..<copy.len)] = rfp(gen)
   of 1: # Add element
-      copy.add rfp(gen)
+    copy.add rfp(gen)
   of 2: # Delete element
     if copy.len > 0:
       discard copy.pop
@@ -88,7 +87,5 @@ proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
     buf[i] = if gen.rand(1.0) <= 0.5: copy1[i] else: copy2[i]
 
   result = buf.len * sizeof(float)
-  if result <= maxResLen:
-    copyMem(res, addr buf[0], result)
-  else:
-    result = 0
+  assert result <= maxResLen
+  copyMem(res, addr buf[0], result)

@@ -56,7 +56,7 @@ Compile with:
 
 .. code-block::
 
-  $ nim c --cc:clang -t:"-fsanitize=fuzzer,address" -l:"-fsanitize=fuzzer,address" -d:nosignalhandler --nomain:on -g tfuzz.nim
+  $ nim c --cc:clang -t:"-fsanitize=fuzzer,address,undefined" -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -g tfuzz.nim
 
 
 Coverage report

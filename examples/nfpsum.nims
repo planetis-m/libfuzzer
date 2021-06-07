@@ -8,4 +8,4 @@ when not defined(fuzzSa):
   --passL: "-fsanitize=fuzzer"
 --passC: "-fsanitize=address,undefined"
 --passL: "-fsanitize=address,undefined"
---path: "../../"
+--path: "../"
