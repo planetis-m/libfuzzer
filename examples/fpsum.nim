@@ -10,18 +10,25 @@ proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput", raises: [].} =
-  var copy = newSeq[float](len div sizeof(float))
+  let cLen = len div sizeof(float)
+  if cLen == 0: return
+  var copy = newSeq[float](cLen)
   copyMem(addr copy[0], data, copy.len * sizeof(float))
 
   let res = sum(copy)
   if isNaN(res):
     quitOrDebug()
-  result = 0
 
 proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomMutator", raises: [].} =
 
-  var copy = newSeq[float](len div sizeof(float))
+  let cLen = len div sizeof(float)
+  if cLen == 0:
+    var tmp = @[1.0, 3, 3, 7] # Use a dummy value
+    result = tmp.len * sizeof(float)
+    copyMem(data, addr tmp[0], result)
+    return
+  var copy = newSeq[float](cLen)
   copyMem(addr copy[0], data, copy.len * sizeof(float))
   var gen = initRand(seed)
 
@@ -72,13 +79,19 @@ proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
     data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
     maxResLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomCrossOver", raises: [].} =
-  var copy1 = newSeq[float](len1 div sizeof(float))
+
+  let cLen1 = len1 div sizeof(float)
+  if cLen1 == 0: return
+  var copy1 = newSeq[float](cLen1)
   copyMem(addr copy1[0], data1, copy1.len * sizeof(float))
 
-  var copy2 = newSeq[float](len2 div sizeof(float))
+  let cLen2 = len2 div sizeof(float)
+  if cLen2 == 0: return
+  var copy2 = newSeq[float](cLen2)
   copyMem(addr copy2[0], data2, copy2.len * sizeof(float))
 
   let len = min(copy1.len, min(copy2.len, maxResLen div sizeof(float)))
+  if len == 0: return
   var buf = newSeq[float](len)
   copyMem(addr buf[0], res, buf.len * sizeof(float))
 

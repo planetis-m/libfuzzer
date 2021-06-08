@@ -1,5 +1,5 @@
 # https://rigtorp.se/fuzzing-floating-point-code/
-import std/[random, fenv, math, streams], bingo, libfuzzer/memstreams
+import std/[random, fenv, math, streams], bingo, memstreams
 
 proc sum(x: openArray[float]): float =
   result = 0.0
@@ -16,6 +16,7 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     loadBin(str, copy)
   except:
     return
+  if copy.len == 0: return
   let res = sum(copy)
   if isNaN(res):
     quitOrDebug()
@@ -59,8 +60,15 @@ else:
       let readStr = newReadStream(data, len)
       loadBin(readStr, copy)
     except:
-      return len
+      var tmp = @[1.0, 3, 3, 7] # Use a dummy value
+      let writeStr = newStringStream(newStringOfCap(tmp.len * sizeof(float)))
+      try: writeStr.storeBin(tmp) except: discard
+      result = writeStr.data.len
+      assert result <= maxLen
+      copyMem(data, addr writeStr.data[0], result)
+      return
 
+    if copy.len == 0: return
     var gen = initRand(seed)
     case gen.rand(3)
     of 0: # Change element
@@ -75,7 +83,7 @@ else:
       gen.shuffle(copy)
 
     let writeStr = newStringStream(newStringOfCap(copy.len * sizeof(float)))
-    writeStr.storeBin(copy)
+    try: writeStr.storeBin(copy) except: discard
     result = writeStr.data.len
     if result <= maxLen:
       copyMem(data, addr writeStr.data[0], result)
@@ -92,16 +100,17 @@ else:
       let readStr1 = newReadStream(data1, len1)
       loadBin(readStr1, copy1)
     except:
-      return 0
+      return
 
     var copy2: seq[float]
     try:
       let readStr2 = newReadStream(data2, len2)
       loadBin(readStr2, copy2)
     except:
-      return 0
+      return
 
     let len = min(copy1.len, min(copy2.len, maxResLen div sizeof(float)))
+    if len == 0: return
     var buf = newSeq[float](len)
 
     var gen = initRand(seed)
@@ -110,7 +119,7 @@ else:
                else: copy2[i]
 
     let writeStr = newStringStream(newStringOfCap(buf.len * sizeof(float)))
-    writeStr.storeBin(buf)
+    try: writeStr.storeBin(buf) except: discard
     result = writeStr.data.len
     if result <= maxResLen:
       copyMem(res, addr writeStr.data[0], result)
