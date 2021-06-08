@@ -9,7 +9,7 @@ type
     data: array[10, char]
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput".} =
+    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   if len < sizeof(Image):
     return 0
   let img = cast[ptr Image](data)

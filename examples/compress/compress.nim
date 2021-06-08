@@ -1,7 +1,7 @@
 import snappy, std/strutils
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput".} =
+    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   # Decompress the input data and crash if it starts with "boom".
   let data = cast[string](uncompress(data.toOpenArray(0, len-1)))
   if data.startsWith("boom"): quit(QuitFailure)
@@ -16,7 +16,7 @@ else:
       importc: "LLVMFuzzerMutate".}
 
   proc customMutator(data: ptr UncheckedArray[byte]; len, maxLen: int, seed: int64): int {.
-      exportc: "LLVMFuzzerCustomMutator".} =
+      exportc: "LLVMFuzzerCustomMutator", raises: [].} =
     # Decompress the input data. If that fails, use a dummy value.
     var uncompressed = uncompress(data.toOpenArray(0, len-1))
     if uncompressed.len == 0: uncompressed = cast[seq[byte]](@"hi")

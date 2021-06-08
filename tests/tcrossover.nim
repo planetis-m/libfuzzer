@@ -12,7 +12,7 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
   {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
 proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput".} =
+    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   result = 0
   const targetHash = hash(Target)
   var strHash = hash(data.toOpenArray(0, len-1))
@@ -27,10 +27,10 @@ proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
 proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
     data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
     maxResLen: int, seed: int64): int {.
-    exportc: "LLVMFuzzerCustomCrossOver".} =
+    exportc: "LLVMFuzzerCustomCrossOver", raises: [].} =
   const separatorLen = len(Separator)
   if printed < 32:
-    stderr.write &"In customCrossover {len1} {len2}\n"
+    try: stderr.write &"In customCrossover {len1} {len2}\n" except: discard
   inc(printed)
   result = len1 + len2 + separatorLen
   if result > maxResLen:

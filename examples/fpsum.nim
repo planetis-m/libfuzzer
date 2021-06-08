@@ -9,7 +9,7 @@ proc sum(x: openArray[float]): float =
 proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput".} =
+    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   var copy = newSeq[float](len div sizeof(float))
   copyMem(addr copy[0], data, copy.len * sizeof(float))
 
@@ -19,7 +19,7 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
   result = 0
 
 proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
-    exportc: "LLVMFuzzerCustomMutator".} =
+    exportc: "LLVMFuzzerCustomMutator", raises: [].} =
 
   var copy = newSeq[float](len div sizeof(float))
   copyMem(addr copy[0], data, copy.len * sizeof(float))
@@ -71,7 +71,7 @@ proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64
 proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
     data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
     maxResLen: int, seed: int64): int {.
-    exportc: "LLVMFuzzerCustomCrossOver".} =
+    exportc: "LLVMFuzzerCustomCrossOver", raises: [].} =
   var copy1 = newSeq[float](len1 div sizeof(float))
   copyMem(addr copy1[0], data1, copy1.len * sizeof(float))
 

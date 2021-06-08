@@ -9,7 +9,7 @@ proc sum(x: openArray[float]): float =
 proc quitOrDebug() {.noreturn, importc: "abort", header: "<stdlib.h>", nodecl.}
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput".} =
+    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   var copy: seq[float]
   try:
     let str = newReadStream(data, len)
@@ -27,7 +27,7 @@ else:
     {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
   proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
-      exportc: "LLVMFuzzerCustomMutator".} =
+      exportc: "LLVMFuzzerCustomMutator", raises: [].} =
 
     proc rfp(gen: var Rand): float =
       case gen.rand(10)
@@ -85,7 +85,7 @@ else:
   proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
       data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
       maxResLen: int, seed: int64): int {.
-      exportc: "LLVMFuzzerCustomCrossOver".} =
+      exportc: "LLVMFuzzerCustomCrossOver", raises: [].} =
 
     var copy1: seq[float]
     try:

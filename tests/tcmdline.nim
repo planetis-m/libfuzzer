@@ -13,7 +13,7 @@ proc initialize(argc: ptr cint; argv: ptr cstringArray): cint {.exportc: "LLVMFu
   {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput".} =
+    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   let cmdline = cstringArrayToSeq(cmdLinePtr[], cmdCountPtr[])
   var p = initOptParser(cmdline)
   for kind, key, val in p.getopt():

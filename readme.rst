@@ -50,7 +50,7 @@ In 95% of cases all you need is to define the procedure ``testOneInput`` in your
     {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
   proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-      exportc: "LLVMFuzzerTestOneInput".} =
+      exportc: "LLVMFuzzerTestOneInput", raises: [].} =
     result = 0
     discard fuzzMe(data.toOpenArray(0, len-1))
 
