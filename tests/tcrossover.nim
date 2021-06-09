@@ -27,10 +27,10 @@ proc testOneInput*(data: ptr UncheckedArray[byte], len: int): cint {.
 proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
     data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
     maxResLen: int, seed: int64): int {.
-    exportc: "LLVMFuzzerCustomCrossOver", raises: [].} =
+    exportc: "LLVMFuzzerCustomCrossOver".} =
   const separatorLen = len(Separator)
   if printed < 32:
-    try: stderr.write &"In customCrossover {len1} {len2}\n" except: discard
+    stderr.write &"In customCrossover {len1} {len2}\n"
   inc(printed)
   result = len1 + len2 + separatorLen
   if result > maxResLen:

@@ -24,10 +24,10 @@ else:
     # the `decompressed` seq's for inserting mutations via `grow`.
     let oldLen = uncompressed.len
     uncompressed.grow(oldLen*2, 0)
-    let newDecompressedLen = mutate(cast[ptr UncheckedArray[byte]](addr uncompressed[0]),
+    let newUncompressedLen = mutate(cast[ptr UncheckedArray[byte]](addr uncompressed[0]),
         oldLen, uncompressed.len)
     # Recompress the mutated data.
-    let compressed = compress(uncompressed.toOpenArray(0, newDecompressedLen-1))
+    let compressed = compress(uncompressed.toOpenArray(0, newUncompressedLen-1))
     # Copy the recompressed mutated data into `data` and return the new length.
     result = min(maxLen, compressed.len)
     for i in 0..<result: data[i] = compressed[i]

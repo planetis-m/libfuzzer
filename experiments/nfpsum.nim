@@ -28,7 +28,7 @@ else:
     {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
   proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
-      exportc: "LLVMFuzzerCustomMutator", raises: [].} =
+      exportc: "LLVMFuzzerCustomMutator".} =
 
     proc rfp(gen: var Rand): float =
       case gen.rand(10)
@@ -62,7 +62,7 @@ else:
     except:
       var tmp = @[1.0, 3, 3, 7] # Use a dummy value
       let writeStr = newStringStream(newStringOfCap(tmp.len * sizeof(float)))
-      try: writeStr.storeBin(tmp) except: discard
+      writeStr.storeBin(tmp)
       result = writeStr.data.len
       assert result <= maxLen
       copyMem(data, addr writeStr.data[0], result)
@@ -83,7 +83,7 @@ else:
       gen.shuffle(copy)
 
     let writeStr = newStringStream(newStringOfCap(copy.len * sizeof(float)))
-    try: writeStr.storeBin(copy) except: discard
+    writeStr.storeBin(copy)
     result = writeStr.data.len
     if result <= maxLen:
       copyMem(data, addr writeStr.data[0], result)
@@ -93,7 +93,7 @@ else:
   proc customCrossOver(data1: ptr UncheckedArray[byte], len1: int,
       data2: ptr UncheckedArray[byte], len2: int, res: ptr UncheckedArray[byte],
       maxResLen: int, seed: int64): int {.
-      exportc: "LLVMFuzzerCustomCrossOver", raises: [].} =
+      exportc: "LLVMFuzzerCustomCrossOver".} =
 
     var copy1: seq[float]
     try:
@@ -119,7 +119,7 @@ else:
                else: copy2[i]
 
     let writeStr = newStringStream(newStringOfCap(buf.len * sizeof(float)))
-    try: writeStr.storeBin(buf) except: discard
+    writeStr.storeBin(buf)
     result = writeStr.data.len
     if result <= maxResLen:
       copyMem(res, addr writeStr.data[0], result)

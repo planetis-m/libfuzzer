@@ -8,10 +8,10 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
   {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
 
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
-    exportc: "LLVMFuzzerTestOneInput", raises: [].} =
+    exportc: "LLVMFuzzerTestOneInput".} =
   if len >= 7:
     var copy = newString(6)
     copyMem(cstring(copy), cast[cstring](data), copy.len)
     if copy == "qwerty":
-      try: stderr.write("BINGO\n") except: discard
+      stderr.write("BINGO\n")
       quitOrDebug()

@@ -6,7 +6,7 @@ proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
 proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   if true:
-    raise newException(ValueError, "my my my")
+    raise newException(RangeDefect, "my my my")
 
 proc customMutator(data: ptr UncheckedArray[byte]; len, maxLen: int, seed: int64): int {.
     exportc: "LLVMFuzzerCustomMutator".} =
