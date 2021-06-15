@@ -11,9 +11,12 @@ var
 
 getShadowMapping(addr shadowMemoryScale, addr shadowMemoryOffset)
 
-proc printShadowMemory*(address: pointer) {.noASan.} =
+proc printShadowMemoryImpl(address: pointer, filename: string, line: int) {.noASan.} =
   let shadowMemory = cast[ptr UncheckedArray[uint8]](
       cast[uint](address) shr shadowMemoryScale + shadowMemoryOffset.uint)
-  let (filename, line, _) = instantiationInfo()
   stdout.write(&"Shadow Memory at {filename}:{line}\n")
   stdout.write(&"{cast[ByteAddress](address):#x}: {shadowMemory[0]:02x} {shadowMemory[1]:02x} {shadowMemory[2]:02x} {shadowMemory[3]:02x} {shadowMemory[4]:02x} {shadowMemory[5]:02x} {shadowMemory[6]:02x} {shadowMemory[7]:02x}\n")
+
+template printShadowMemory*(address: untyped) =
+  let (filename, line, _) = instantiationInfo()
+  printShadowMemoryImpl(address, filename, line)
