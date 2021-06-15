@@ -27,4 +27,5 @@ points[1] = Point(x: 1)
 echo points[1]
 # Pretend to destroy `points[1]`
 poisonMem(addr points[1], sizeof(Point))
+printShadowMemory(addr points[1])
 echo points[1]

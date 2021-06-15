@@ -6,8 +6,8 @@ proc getShadowMapping(shadowScale, shadowOffset: ptr int) {.header:
     "sanitizer/asan_interface.h", importc: "__asan_get_shadow_mapping".}
 
 var
-  shadowMemoryScale*: int
-  shadowMemoryOffset*: int
+  shadowMemoryScale: int
+  shadowMemoryOffset: int
 
 getShadowMapping(addr shadowMemoryScale, addr shadowMemoryOffset)
 
