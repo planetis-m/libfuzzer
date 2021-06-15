@@ -1,6 +1,6 @@
 # Contrived example of ASan poisoning, use `-d:useMalloc`
 # https://github.com/mcgov/asan_alignment_example
-import std/strutils
+import shadowmem
 
 proc poisonMem(region: pointer, size: int) {.header:
     "sanitizer/asan_interface.h", importc: "ASAN_POISON_MEMORY_REGION".}
@@ -18,7 +18,7 @@ type
 var
   points = newSeq[Point](5)
 # Print the address
-echo cast[ByteAddress](addr points[1]).toHex
+printShadowMemory(addr points[1])
 # Poison the entire seq
 poisonMem(addr points[0], points.len * sizeof(Point))
 # Create a Point

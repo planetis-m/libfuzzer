@@ -1,6 +1,6 @@
 import std/strformat
 
-{.pragma: noASan, codegenDecl: "$# __declspec(no_sanitize_address) $#$#".}
+{.pragma: noASan, codegenDecl: "__attribute__((no_sanitize_address)) $# $#$#".}
 
 proc getShadowMapping(shadowScale, shadowOffset: ptr int) {.header:
     "sanitizer/asan_interface.h", importc: "__asan_get_shadow_mapping".}
