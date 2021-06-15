@@ -3,6 +3,8 @@
 # --panics:on --gc:arc -d:useMalloc --cc:clang -t:"-fsanitize=fuzzer,address,undefined"
 # -l:"-fsanitize=fuzzer,address,undefined" -d:nosignalhandler --nomain:on -d:danger -g
 
+# objdump --no-show-raw-insn -drwlS -M intel --start-address=0x
+
 proc fuzzMe(data: openarray[byte]): bool =
   result = data.len >= 3 and
     data[0].char == 'F' and
