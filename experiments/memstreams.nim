@@ -1,4 +1,4 @@
-import streams
+import std/streams
 
 type
   ReadStream* = ref ReadStreamObj

@@ -14,7 +14,8 @@ when defined(fuzzSa):
   include libfuzzer/standalone
 else:
   proc initialize(): cint {.exportc: "LLVMFuzzerInitialize".} =
-    {.emit: "N_CDECL(void, NimMain)(void); NimMain();".}
+    proc NimMain() {.importc: "NimMain".}
+    NimMain()
 
   proc mutate(data: ptr UncheckedArray[byte]; len, maxLen: int): int {.
       importc: "LLVMFuzzerMutate".}
