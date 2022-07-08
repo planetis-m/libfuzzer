@@ -12,7 +12,7 @@ proc testOneInput(data: ptr UncheckedArray[byte], len: int): cint {.
     exportc: "LLVMFuzzerTestOneInput", raises: [].} =
   var copy: seq[float]
   try:
-    let str = newReadStream(data, len)
+    let str = newMemStream(data, len)
     loadBin(str, copy)
   except:
     return
@@ -57,10 +57,10 @@ else:
 
     var copy: seq[float]
     try:
-      let readStr = newReadStream(data, len)
+      let readStr = newMemStream(data, len)
       loadBin(readStr, copy)
     except:
-      let writeStr = newWriteStream(data, maxLen)
+      let writeStr = newMemStream(data, maxLen)
       writeStr.storeBin(@[1.0, 2, 3, 4])
       result = writeStr.getPosition()
 
@@ -78,9 +78,9 @@ else:
     else: # Shuffle elements
       gen.shuffle(copy)
 
-    result = byteSize(copy)
+    result = copy.byteSize
     if result <= maxLen:
-      let writeStr = newWriteStream(data, maxLen)
+      let writeStr = newMemStream(data, maxLen)
       writeStr.storeBin(copy)
     else:
       result = len
@@ -92,14 +92,14 @@ else:
 
     var copy1: seq[float]
     try:
-      let readStr1 = newReadStream(data1, len1)
+      let readStr1 = newMemStream(data1, len1)
       loadBin(readStr1, copy1)
     except:
       return
 
     var copy2: seq[float]
     try:
-      let readStr2 = newReadStream(data2, len2)
+      let readStr2 = newMemStream(data2, len2)
       loadBin(readStr2, copy2)
     except:
       return
@@ -113,9 +113,9 @@ else:
       buf[i] = if gen.rand(1.0) <= 0.5: copy1[i]
                else: copy2[i]
 
-    result = byteSize(buf)
+    result = buf.byteSize
     if result <= maxResLen:
-      let writeStr = newWriteStream(res, maxResLen)
+      let writeStr = newMemStream(res, maxResLen)
       writeStr.storeBin(buf)
     else:
       result = len
