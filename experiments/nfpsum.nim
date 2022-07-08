@@ -30,7 +30,7 @@ else:
   proc customMutator(data: ptr UncheckedArray[byte], len, maxLen: int, seed: int64): int {.
       exportc: "LLVMFuzzerCustomMutator".} =
 
-    proc rfp(gen: var Rand): float =
+    proc randFloat(gen: var Rand): float =
       case gen.rand(10)
       of 0:
         result = NaN
@@ -60,33 +60,28 @@ else:
       let readStr = newReadStream(data, len)
       loadBin(readStr, copy)
     except:
-      var tmp = @[1.0, 3, 3, 7] # Use a dummy value
-      let writeStr = newStringStream(newStringOfCap(tmp.len * sizeof(float)))
-      writeStr.storeBin(tmp)
-      result = writeStr.data.len
-      assert result <= maxLen
-      copyMem(data, addr writeStr.data[0], result)
-      return
+      let writeStr = newWriteStream(data, maxLen)
+      writeStr.storeBin(@[1.0, 2, 3, 4])
+      result = writeStr.getPosition()
 
     if copy.len == 0: return
     var gen = initRand(seed)
     case gen.rand(3)
     of 0: # Change element
       if copy.len > 0:
-        copy[gen.rand(0..<copy.len)] = rfp(gen)
+        copy[gen.rand(0..<copy.len)] = randFloat(gen)
     of 1: # Add element
-      copy.add rfp(gen)
+      copy.add randFloat(gen)
     of 2: # Delete element
       if copy.len > 0:
         discard copy.pop
     else: # Shuffle elements
       gen.shuffle(copy)
 
-    let writeStr = newStringStream(newStringOfCap(copy.len * sizeof(float)))
-    writeStr.storeBin(copy)
-    result = writeStr.data.len
+    result = byteSize(copy)
     if result <= maxLen:
-      copyMem(data, addr writeStr.data[0], result)
+      let writeStr = newWriteStream(data, maxLen)
+      writeStr.storeBin(copy)
     else:
       result = len
 
@@ -118,10 +113,9 @@ else:
       buf[i] = if gen.rand(1.0) <= 0.5: copy1[i]
                else: copy2[i]
 
-    let writeStr = newStringStream(newStringOfCap(buf.len * sizeof(float)))
-    writeStr.storeBin(buf)
-    result = writeStr.data.len
+    result = byteSize(buf)
     if result <= maxResLen:
-      copyMem(res, addr writeStr.data[0], result)
+      let writeStr = newWriteStream(res, maxResLen)
+      writeStr.storeBin(buf)
     else:
-      result = 0
+      result = len

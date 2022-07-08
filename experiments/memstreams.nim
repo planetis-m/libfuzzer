@@ -6,9 +6,14 @@ type
   ReadStreamObj = object of StreamObj
     data: ptr UncheckedArray[byte]
     len, pos: int
+  WriteStream* = ref WriteStreamObj
+  WriteStreamObj = object of ReadStreamObj
 
 proc `=sink`*(dest: var ReadStreamObj; source: ReadStreamObj) {.error.}
 proc `=copy`*(dest: var ReadStreamObj; source: ReadStreamObj) {.error.}
+
+proc `=sink`*(dest: var WriteStreamObj; source: WriteStreamObj) {.error.}
+proc `=copy`*(dest: var WriteStreamObj; source: WriteStreamObj) {.error.}
 
 proc rsAtEnd(s: Stream): bool =
   let s = ReadStream(s)
@@ -39,6 +44,15 @@ proc rsPeekData(s: Stream, buffer: pointer, bufLen: int): int =
   else:
     result = 0
 
+proc wsWriteData(s: Stream, buffer: pointer, bufLen: int) =
+  var s = WriteStream(s)
+  if bufLen <= 0:
+    return
+  if s.pos + bufLen > s.len:
+    raise newException(IOError, "cannot write to stream")
+  copyMem(addr(s.data[s.pos]), buffer, bufLen)
+  inc(s.pos, bufLen)
+
 proc newReadStream*(s: openarray[byte]): ReadStream =
   result = ReadStream(
     data: cast[ptr UncheckedArray[byte]](s),
@@ -67,4 +81,19 @@ proc newReadStream*(data: ptr UncheckedArray[byte], len: int): ReadStream =
     readDataImpl: rsReadData,
     peekDataImpl: rsPeekData,
     writeDataImpl: nil
+  )
+
+proc newWriteStream*(data: ptr UncheckedArray[byte], len: int): WriteStream =
+  result = WriteStream(
+    data: data,
+    len: len,
+    pos: 0,
+    closeImpl: nil,
+    atEndImpl: rsAtEnd,
+    setPositionImpl: rsSetPosition,
+    getPositionImpl: rsGetPosition,
+    readDataStrImpl: nil,
+    readDataImpl: nil,
+    peekDataImpl: nil,
+    writeDataImpl: wsWriteData
   )

@@ -83,7 +83,8 @@ Structure-Aware Fuzzing
 
 —*Structure-Aware Fuzzing with libFuzzer* [5]_
 
-Take a look at the snappy compression `example <examples/compress/>`_.
+Take a look at the snappy compression `example <examples/compress/>`_
+and ` <experiments/nfpsum.nim>`_
 
 Installation
 ============
