@@ -1,10 +1,12 @@
 # Package
+
 version     = "0.1.0"
 author      = "Antonis Geralis"
 description = "Thin interface for libFuzzer, an in-process, coverage-guided, evolutionary fuzzing engine."
 license     = "MIT"
 
 # Deps
+
 requires "nim >= 1.0.0"
 
 import os
@@ -22,4 +24,4 @@ task docs, "Generate documentation":
     let src = "libfuzzer" / (tmp & ".nim")
     # Generate the docs for {src}
     exec("nim doc --verbosity:0 --git.url:" & ProjectUrl &
-        " --git.devel:main --git.commit:main --out:" & doc & " " & src)
+        " --git.devel:master --git.commit:master --out:" & doc & " " & src)
